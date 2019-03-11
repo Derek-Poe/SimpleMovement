@@ -203,7 +203,7 @@ document.getElementById("GamePieceSizeLabel").innerHTML = "30 x 30";
 
 function startGame() {
 	
-	if (debug == true){
+	if (debug == true){	
 		
 		GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
 		GameArea.start();
@@ -216,7 +216,6 @@ function startGame() {
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
 		fullScreen();
-		document.documentElement.style.overflow = "hidden";
 		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
