@@ -78,6 +78,7 @@ canvas {
 <button id="spawnEnemyButton" onclick="spawnEnemy()">Spawn Enemy</button><br><br>
 <button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
 <button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
+<button id="splitMinisButton" onclick="launchMoreMinis()">Split Minis!</button>
 
 </div>
 
@@ -171,8 +172,17 @@ var LargeMini5;
 var LargeMini6;
 var LargeMini7;
 var LargeMini8;
+var LargeMini9;
+var LargeMini10;
+var LargeMini11;
+var LargeMini12;
+var LargeMini13;
+var LargeMini14;
+var LargeMini15;
+var LargeMini16;
 largeMiniSize = 3;
 minisLaunched = false;
+moreMinisLaunched = false;
 
 gameAreaSizeFactor = 1;
 position = "(0, 0)";
@@ -505,6 +515,14 @@ LargeMini5 = new component(0, 0, "black", 0, 0);
 LargeMini6 = new component(0, 0, "black", 0, 0);
 LargeMini7 = new component(0, 0, "black", 0, 0);
 LargeMini8 = new component(0, 0, "black", 0, 0);
+LargeMini9 = new component(0, 0, "black", 0, 0);
+LargeMini10 = new component(0, 0, "black", 0, 0);
+LargeMini11 = new component(0, 0, "black", 0, 0);
+LargeMini12 = new component(0, 0, "black", 0, 0);
+LargeMini13 = new component(0, 0, "black", 0, 0);
+LargeMini14 = new component(0, 0, "black", 0, 0);
+LargeMini15 = new component(0, 0, "black", 0, 0);
+LargeMini16 = new component(0, 0, "black", 0, 0);
 
 
 //Move Enemy Toward Player
@@ -662,6 +680,34 @@ function enemyProjectilePosition(){
 
 		}
 
+		if(moreMinisLaunched == true){
+
+			LargeMini9.x += 0 * enemyProjectileSpeed;
+			LargeMini9.y += 1 * enemyProjectileSpeed;
+
+			LargeMini10.x += 1 * enemyProjectileSpeed;
+			LargeMini10.y += 0 * enemyProjectileSpeed;
+
+			LargeMini11.x += 1 * enemyProjectileSpeed;
+			LargeMini11.y += 0 * enemyProjectileSpeed;
+
+			LargeMini12.x += 0 * enemyProjectileSpeed;
+			LargeMini12.y += -1 * enemyProjectileSpeed;
+
+			LargeMini13.x += 0 * enemyProjectileSpeed;
+			LargeMini13.y += -1 * enemyProjectileSpeed;
+
+			LargeMini14.x += -1 * enemyProjectileSpeed;
+			LargeMini14.y += 0 * enemyProjectileSpeed;
+
+			LargeMini15.x += -1 * enemyProjectileSpeed;
+			LargeMini15.y += 0 * enemyProjectileSpeed;
+
+			LargeMini16.x += 0 * enemyProjectileSpeed;
+			LargeMini16.y += 1 * enemyProjectileSpeed;
+
+		}
+
 		if(
 		GamePiece.x < GamePiece4.x + GamePiece4.width &&
 		GamePiece.x + GamePiece.width > GamePiece4.x &&
@@ -771,7 +817,94 @@ function enemyProjectilePosition(){
 			enemyTouch();	
 
 		}
+
+		if(
+		GamePiece.x < LargeMini9.x + LargeMini9.width &&
+		GamePiece.x + GamePiece.width > LargeMini9.x &&
+		GamePiece.y < LargeMini9.y + LargeMini9.height &&
+		GamePiece.y + GamePiece.height > LargeMini9.y
+		) {
+
+			enemyTouch();	
+
+		}
 		
+		if(
+		GamePiece.x < LargeMini10.x + LargeMini10.width &&
+		GamePiece.x + GamePiece.width > LargeMini10.x &&
+		GamePiece.y < LargeMini10.y + LargeMini10.height &&
+		GamePiece.y + GamePiece.height > LargeMini10.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini11.x + LargeMini11.width &&
+		GamePiece.x + GamePiece.width > LargeMini11.x &&
+		GamePiece.y < LargeMini11.y + LargeMini11.height &&
+		GamePiece.y + GamePiece.height > LargeMini11.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini12.x + LargeMini12.width &&
+		GamePiece.x + GamePiece.width > LargeMini12.x &&
+		GamePiece.y < LargeMini12.y + LargeMini12.height &&
+		GamePiece.y + GamePiece.height > LargeMini12.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini13.x + LargeMini13.width &&
+		GamePiece.x + GamePiece.width > LargeMini13.x &&
+		GamePiece.y < LargeMini13.y + LargeMini13.height &&
+		GamePiece.y + GamePiece.height > LargeMini13.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini14.x + LargeMini14.width &&
+		GamePiece.x + GamePiece.width > LargeMini14.x &&
+		GamePiece.y < LargeMini14.y + LargeMini14.height &&
+		GamePiece.y + GamePiece.height > LargeMini14.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini15.x + LargeMini15.width &&
+		GamePiece.x + GamePiece.width > LargeMini15.x &&
+		GamePiece.y < LargeMini15.y + LargeMini15.height &&
+		GamePiece.y + GamePiece.height > LargeMini15.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini16.x + LargeMini16.width &&
+		GamePiece.x + GamePiece.width > LargeMini16.x &&
+		GamePiece.y < LargeMini16.y + LargeMini16.height &&
+		GamePiece.y + GamePiece.height > LargeMini16.y
+		) {
+
+			enemyTouch();	
+
+		}
 
 		if(
 		GamePiece4.x < 0 - GamePiece4.width ||
@@ -815,6 +948,14 @@ function updateGameArea() {
 	LargeMini6.update();
 	LargeMini7.update();
 	LargeMini8.update();
+	LargeMini9.update();
+	LargeMini10.update();
+	LargeMini11.update();
+	LargeMini12.update();
+	LargeMini13.update();
+	LargeMini14.update();
+	LargeMini15.update();
+	LargeMini16.update();
 
 }
 
@@ -1546,13 +1687,35 @@ function launchMinis (){
 	LargeMini7 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	LargeMini8 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 
+	if(game1Score >= 25){
+
+		setTimeout(launchMoreMinis, 500);
+
+	}
+
 	setTimeout(stopMinis, 7000);
+
+}
+
+function launchMoreMinis (){
+
+	moreMinisLaunched = true;
+
+	LargeMini9 = new component(largeMiniSize, largeMiniSize, "red", LargeMini2.x+(LargeMini2.width/2), LargeMini2.y+(LargeMini2.height/2));
+	LargeMini10 = new component(largeMiniSize, largeMiniSize, "red", LargeMini2.x+(LargeMini2.width/2), LargeMini2.y+(LargeMini2.height/2));
+	LargeMini11 = new component(largeMiniSize, largeMiniSize, "red", LargeMini4.x+(LargeMini4.width/2), LargeMini4.y+(LargeMini4.height/2));
+	LargeMini12 = new component(largeMiniSize, largeMiniSize, "red", LargeMini4.x+(LargeMini4.width/2), LargeMini4.y+(LargeMini4.height/2));
+	LargeMini13 = new component(largeMiniSize, largeMiniSize, "red", LargeMini6.x+(LargeMini6.width/2), LargeMini6.y+(LargeMini6.height/2));
+	LargeMini14 = new component(largeMiniSize, largeMiniSize, "red", LargeMini6.x+(LargeMini6.width/2), LargeMini6.y+(LargeMini6.height/2));
+	LargeMini15 = new component(largeMiniSize, largeMiniSize, "red", LargeMini8.x+(LargeMini8.width/2), LargeMini8.y+(LargeMini8.height/2));
+	LargeMini16 = new component(largeMiniSize, largeMiniSize, "red", LargeMini8.x+(LargeMini8.width/2), LargeMini8.y+(LargeMini8.height/2));
 
 }
 
 function stopMinis (){
 
 	minisLaunched = false;
+	moreMinisLaunched = false;
 
 	LargeMini1 = new component(0, 0, "black", 0, 0);
 	LargeMini2 = new component(0, 0, "black", 0, 0);
@@ -1562,6 +1725,14 @@ function stopMinis (){
 	LargeMini6 = new component(0, 0, "black", 0, 0);
 	LargeMini7 = new component(0, 0, "black", 0, 0);
 	LargeMini8 = new component(0, 0, "black", 0, 0);
+	LargeMini9 = new component(0, 0, "black", 0, 0);
+	LargeMini10 = new component(0, 0, "black", 0, 0);
+	LargeMini11 = new component(0, 0, "black", 0, 0);
+	LargeMini12 = new component(0, 0, "black", 0, 0);
+	LargeMini13 = new component(0, 0, "black", 0, 0);
+	LargeMini14 = new component(0, 0, "black", 0, 0);
+	LargeMini15 = new component(0, 0, "black", 0, 0);
+	LargeMini16 = new component(0, 0, "black", 0, 0);
 
 }
 
@@ -1795,7 +1966,8 @@ if(debug == false) {
 	document.getElementById("startGameButton").style.display = "none";
 	document.getElementById("spawnEnemyButton").style.display = "none";
 	document.getElementById("enemyFireButton").style.display = "none";
-	document.getElementById("enemyFireLargeButton").style.display = "none";*/
+	document.getElementById("enemyFireLargeButton").style.display = "none";
+	document.getElementById("splitMinisButton").style.display = "none";*/
 
 }
 
