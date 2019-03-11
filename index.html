@@ -214,7 +214,7 @@ function startGame() {
 
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
-
+		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
 			if(titleScreenActive == true){	
@@ -485,12 +485,24 @@ function gameScores(){
 function titleScreen(){
 
 	if(titleScreenActive == true){
-
-		let title = GameArea.context;
-		title.font = "25px Arial";
-		title.fillStyle = "#00e600";
-		title.fillText("Simple Movement", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
+	
+		if(game1Loss == false){	
+	
+			let title = GameArea.context;
+			title.font = "25px Arial";
+			title.fillStyle = "#FFFF00";
+			title.fillText("Simple Movement", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
 		
+		}
+		else {
+
+			let title = GameArea.context;
+			title.font = "25px Arial";
+			title.fillStyle = "red";
+			title.fillText("Try Again?", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
+
+		}		
+	
 		let touchtostart = GameArea.context;
 		touchtostart.font = "22px Arial";
 		touchtostart.fillStyle = "#00e600";
@@ -1274,8 +1286,10 @@ function markBorderTouch() {
 
 		if(game1Loss == false){
 				
-			GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-			GamePiece2 = new component(40, 40, "yellow", 0, 0);
+			//GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
+			//GamePiece2 = new component(40, 40, "yellow", 0, 0);
+			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+			GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 			GamePiece3 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
@@ -1284,7 +1298,7 @@ function markBorderTouch() {
 			}
 
 			game1Loss = true;
-			game1Score = 0;
+			titleScreenActive = true;
 			enemyPieceActive = false;
 
 			clearInterval(gamePieceGrowing);
@@ -1314,8 +1328,10 @@ function enemyTouch(){
 
 	if(game1Loss == false){
 
-		GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-		GamePiece2 = new component(40, 40, "yellow", 0, 0);
+		//GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
+		//GamePiece2 = new component(40, 40, "yellow", 0, 0);
+		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 		GamePiece3 = new component(0, 0, "black", 0, 0);
 		GamePiece4 = new component(0, 0, "black", 0, 0);
 
@@ -1323,7 +1339,7 @@ function enemyTouch(){
 		lossSound.play();
 
 		game1Loss = true;
-		game1Score = 0;
+		titleScreenActive = true;
 		enemyPieceActive = false;
 
 		clearInterval(gamePieceGrowing);
@@ -1460,6 +1476,13 @@ function startGame1(){
 		game1HighScore = 0;
 		gameStartSound.play();
 	
+	}
+
+	if(game1Loss == true){
+
+		titleScreenActive = false;
+		game1Score = 0;
+
 	}
 	
 	if(game1Score == 0){
