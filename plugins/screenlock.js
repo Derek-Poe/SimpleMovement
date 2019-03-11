@@ -11,3 +11,5 @@ async function lockStart() {
 	lockReady();
 
 }
+
+document.getElementById("lsButton").click();
