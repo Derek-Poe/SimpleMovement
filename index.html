@@ -79,6 +79,7 @@ canvas {
 <button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
 <button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
 <button id="splitMinisButton" onclick="launchMoreMinis()">Split Minis!</button>
+<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
 
 </div>
 
@@ -207,13 +208,14 @@ function startGame() {
 		GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
 		GameArea.start();
 		increaseAreaSize();
-		document.getElementById("lsButton").click();
 	
 	}
 	else {
 
+	
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
+		fullScreen();
 		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
@@ -1998,8 +2000,6 @@ if(debug == false) {
 
 
 </script>
-
-<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
 
 </body>
 
