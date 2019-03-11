@@ -98,7 +98,6 @@ canvas {
 //Debug Mode Start
 
 isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-debug = false;
 
 if(isMobile != true){
 
@@ -106,13 +105,20 @@ if(isMobile != true){
 
 }
 
-if(isMobile != true){
+if(isMobile == false){
 	
 	alert("Debug Mode");
 	debug = true;
+	titleScreenActive = false;
 	accelX = 0;
 	accelY = 0;
 	accelZ = 0;
+
+}
+else{
+	
+	debug = false;
+	titleScreenActive = true;
 
 }
 
@@ -185,11 +191,33 @@ document.getElementById("GamePieceSizeLabel").innerHTML = "30 x 30";
 //Start Basic Game Functions
 
 function startGame() {
+	
+	if (debug == true){
+		
+		GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
+		GameArea.start();
+		increaseAreaSize();
+		document.getElementById("lsButton").click();
+	
+	}
+	else {
 
-	GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
-	GameArea.start();
-	increaseAreaSize();
-	document.getElementById("lsButton").click();
+		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		GameArea.start();
+
+		document.querySelector("#canvas1").addEventListener('click', function() {
+			
+			if(titleScreenActive == true){	
+			
+				titleScreenActive = false;
+				GamePiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (GamePiece.width/2)), ((GameArea.canvas.height/2) - (GamePiece.height/2)), 0, 0);
+				startGame1();
+
+			}
+
+		});
+
+	}
 
 }
 
@@ -433,12 +461,30 @@ function gameScores(){
 
 	if(game1Active == true){
 
-		ctx = GameArea.context;
+		let scores = GameArea.context;
 
-		ctx.font = "25px Arial";
-		ctx.fillStyle = "#00e600";
-		ctx.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
-		ctx.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
+		scores.font = "25px Arial";
+		scores.fillStyle = "#00e600";
+		scores.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
+		scores.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
+
+	}
+
+}
+
+function titleScreen(){
+
+	if(titleScreenActive == true){
+
+		let title = GameArea.context;
+		title.font = "25px Arial";
+		title.fillStyle = "#00e600";
+		title.fillText("Simple Movement", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
+		
+		let touchtostart = GameArea.context;
+		touchtostart.font = "22px Arial";
+		touchtostart.fillStyle = "#00e600";
+		touchtostart.fillText("Touch to Start", (GameArea.canvas.width/2)-60, (GameArea.canvas.height/2)+35);
 
 	}
 
@@ -749,6 +795,7 @@ function enemyProjectilePosition(){
 function updateGameArea() {
 
 	GameArea.clear();
+	titleScreen();
 	GamePiece.newPos();
 	GamePiece.update();
 	GamePiece2.update();
@@ -982,7 +1029,7 @@ function stopPieceX (){
 }
 
 
-////Stop Player Movement Up and Down
+//Stop Player Movement Up and Down
 
 function stopPieceY (){
 
@@ -1032,11 +1079,17 @@ function accelToggle(){
 	if(accel == false && debug == false){
 
 		accel = true;
-		document.getElementById("accelLabel").innerHTML = "Enabled";
-		document.getElementById("accelLabel").style = "color: green";
+		
+		//redundant...
+		if(debug == true){
+
+			document.getElementById("accelLabel").innerHTML = "Enabled";
+			document.getElementById("accelLabel").style = "color: green";
+		
+		}
 
 	}
-	else if(game1Active != true && debug == false){
+	else if(game1Active == false && debug == false){
 
 		accel = false;
 		document.getElementById("accelLabel").innerHTML = "Disabled";
@@ -1685,6 +1738,7 @@ document.addEventListener('keydown', function(event) {
 
 });
 
+
 //Auto Move
 
 document.addEventListener('keydown', function(event) {
@@ -1711,9 +1765,11 @@ document.addEventListener('keydown', function(event) {
 
 if(debug == false) {
 
-	document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
+	//document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
 
-	document.getElementById("speedHeader").style.display = "none";
+	document.getElementById("div1").style.display = "none";	
+
+	/*document.getElementById("speedHeader").style.display = "none";
 	document.getElementById("speedLabel").style.display = "none";
 	document.getElementById("decreaseSpeedButton").style.display = "none";
 	document.getElementById("increaseSpeedButton").style.display = "none";
@@ -1736,10 +1792,10 @@ if(debug == false) {
 	document.getElementById("accelLabel").style.display = "none";
 	document.getElementById("accelerometer").style.display = "none";
 	document.getElementById("accelButton").style.display = "none";
-	//document.getElementById("startGameButton").style.display = "none";
+	document.getElementById("startGameButton").style.display = "none";
 	document.getElementById("spawnEnemyButton").style.display = "none";
 	document.getElementById("enemyFireButton").style.display = "none";
-	document.getElementById("enemyFireLargeButton").style.display = "none";
+	document.getElementById("enemyFireLargeButton").style.display = "none";*/
 
 }
 
