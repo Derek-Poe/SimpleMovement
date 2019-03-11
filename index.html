@@ -74,8 +74,8 @@ canvas {
 <p id="accelLabel">Disabled</p>
 <p id="accelerometer">Unknown</p>
 <button id="accelButton" onclick="accelToggle()">Start/Stop Accelerometer</button> <br><br><br><br>
-<button id="startGameButton" onclick="runTest()">Start Game</button><br><br>
-<button id="spawnEnemyButton" onclick="runTest2()">Spawn Enemy</button><br><br>
+<button id="startGameButton" onclick="startGame1()">Start Game</button><br><br>
+<button id="spawnEnemyButton" onclick="spawnEnemy()">Spawn Enemy</button><br><br>
 <button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
 <button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
 
@@ -286,7 +286,7 @@ function component(width, height, color, x, y, speedX, speedY) {
 			GamePiece.y + GamePiece.height > GamePiece2.y
 			){
 			
-				runTest();
+				startGame1();
 			
 			}
 		
@@ -1257,7 +1257,7 @@ function growGamePiece(){
 
 //Game1 Super Function...
 
-function runTest(){
+function startGame1(){
 	
 	if(game1Active == false){
 	
@@ -1363,7 +1363,7 @@ function runTest(){
 
 	if(game1Score >= 10){
         	
-		runTest2();
+		spawnEnemy();
 
 	}
 	
@@ -1400,7 +1400,7 @@ function runTest(){
 
 //Spawn Enemy
 
-function runTest2 (){
+function spawnEnemy (){
 
 	if(enemyPieceActive == false){
 
@@ -1669,7 +1669,7 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'Space') {
 
-		runTest();
+		startGame1();
 
 	}
 
@@ -1679,7 +1679,7 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'Delete') {
 
-		runTest2();
+		spawnEnemy();
 
 	}
 
