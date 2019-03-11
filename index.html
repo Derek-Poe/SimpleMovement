@@ -216,6 +216,7 @@ function startGame() {
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
 		fullScreen();
+		document.documentElement.style.overflow = "hidden";
 		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
@@ -1529,7 +1530,7 @@ function startGame1(){
 			GamePiece.y = ((GameArea.canvas.height/2) - (GamePiece.height/2));
 			GamePiece.width += 2.5;
 			GamePiece.height += 2.5;
-			speed = 0.75;
+			speed = 0.875;
 
 		}
 
@@ -1552,7 +1553,7 @@ function startGame1(){
 	}
 	else {
 
-		speed += 0.25;
+		speed += 0.125;
 		document.getElementById("speedLabel").innerHTML = speed;
 		GamePiece.width -= 2.5;
 		GamePiece.height -= 2.5;
