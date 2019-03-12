@@ -159,7 +159,7 @@ gamePaused = false;
 testActive = false;
 
 var GamePiece;
-var GamePiece2;
+var PointPiece1;
 var EnemyPiece1;
 var GamePiece4;
 
@@ -316,10 +316,10 @@ function component(width, height, color, x, y, speedX, speedY) {
 		if(game1Active == true){
 		
 			if(
-			GamePiece.x < GamePiece2.x + GamePiece2.width &&
-			GamePiece.x + GamePiece.width > GamePiece2.x &&
-			GamePiece.y < GamePiece2.y + GamePiece2.height &&
-			GamePiece.y + GamePiece.height > GamePiece2.y
+			GamePiece.x < PointPiece1.x + PointPiece1.width &&
+			GamePiece.x + GamePiece.width > PointPiece1.x &&
+			GamePiece.y < PointPiece1.y + PointPiece1.height &&
+			GamePiece.y + GamePiece.height > PointPiece1.y
 			){
 			
 				startGame1();
@@ -513,7 +513,7 @@ function titleScreen(){
 
 //GamePiece and Enemy Projectile Creations
 
-GamePiece2 = new component(0, 0, "black", 0, 0);
+PointPiece1 = new component(0, 0, "black", 0, 0);
 EnemyPiece1 = new component(0, 0, "black", 0, 0);
 GamePiece4 = new component(0, 0, "black", 0, 0);
 LargeMain = new component(0, 0, "black", 0, 0);
@@ -941,7 +941,7 @@ function updateGameArea() {
 	titleScreen();
 	GamePiece.newPos();
 	GamePiece.update();
-	GamePiece2.update();
+	PointPiece1.update();
 	EnemyPiece1.update();
 	GamePiece4.update();
 	enemyPosition();
@@ -1233,7 +1233,7 @@ function markBorderTouch() {
 		if(game1Loss == false){
 				
 			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
-			GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
+			PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
@@ -1273,7 +1273,7 @@ function enemyTouch(){
 	if(game1Loss == false){
 
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
-		GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
+		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
 		GamePiece4 = new component(0, 0, "black", 0, 0);
 
@@ -1447,8 +1447,8 @@ function startGame1(){
 	generateRandomX();
 	generateRandomY();
 	
-	GamePiece2 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - GamePiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - GamePiece.height - 5) + 5));
-	//GamePiece2 = new component(10, 10, "#33d6ff", randomX, randomY);
+	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - GamePiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - GamePiece.height - 5) + 5));
+	//PointPiece1 = new component(10, 10, "#33d6ff", randomX, randomY);
 
 	if(game1Active == true){
 
