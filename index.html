@@ -316,11 +316,6 @@ function component(width, height, color, x, y, speedX, speedY) {
 		if(game1Active == true){
 		
 			if(
-			//GamePiece2.x <= GamePiece.x && GamePiece.x <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y && GamePiece.y <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x+GamePiece.width && GamePiece.x+GamePiece.width <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y+GamePiece.height && GamePiece.y+GamePiece.height <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x+GamePiece.width && GamePiece.x+GamePiece.width <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y && GamePiece.y <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x && GamePiece.x <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y+GamePiece.height && GamePiece.y+GamePiece.height <= GamePiece2.y+GamePiece2.height
-			
 			GamePiece.x < GamePiece2.x + GamePiece2.width &&
 			GamePiece.x + GamePiece.width > GamePiece2.x &&
 			GamePiece.y < GamePiece2.y + GamePiece2.height &&
@@ -979,36 +974,7 @@ function updateGameArea() {
 
 function increaseSpeed(){
 
-	/*speed += 1;
-	document.getElementById("speedLabel").innerHTML = speed;*/
-
-	console.log("increaseTest1");
-
-	/*if(speed < 1){
-
-		console.log("increaseTest2");
-
-		if(speed < 0.1) {
-
-			console.log("increaseTest3");
-			speed += 0.01;
-
-		}
-		else {
-
-			console.log("increaseTest4");
-			speed += 0.1;
-
-		}
-
-	}*/
-	//else {
-
-		console.log("increaseTest5");
-		speed += 1;
-
-	//}
-
+	speed += 1;
 	document.getElementById("speedLabel").innerHTML = speed;
 
 }
@@ -1020,38 +986,10 @@ function decreaseSpeed(){
 
 	if(speed > 0){
 
-		console.log("decreaseTest1");
-
-		/*speed -= 1;
-		document.getElementById("speedLabel").innerHTML = speed;*/
-
-		if(speed <= 1){
-
-			console.log("decreaseTest2");
-			if(speed <= 0.1){
-
-				console.log("decreaseTest3");
-				speed = (speed+10)-1/100;
-
-			}
-			else {
-
-				console.log("decreaseTest4");
-				speed -= 0.1;
-
-			}
-
-		}
-		else{
-
-			console.log("decreaseTest5");
-			speed -= 1;
-
-		}
+		speed -= 1;
+		document.getElementById("speedLabel").innerHTML = speed;
 
 	}
-
-	document.getElementById("speedLabel").innerHTML = speed;
 
 }
 
@@ -1098,22 +1036,22 @@ function decreaseAreaSize(){
 }
 
 
-//(Hopefully) Fit Cavas Size to Mobile Device Screen
+//Fit Cavas Size to Mobile Device Screen
 
 function fullScreen (){
 
-		document.documentElement.style.overflow = "hidden";
+	document.documentElement.style.overflow = "hidden";
 
-		GameArea.canvas.width = screen.width-6;
-		GameArea.canvas.height = screen.height-29.5;
+	GameArea.canvas.width = screen.width-6;
+	GameArea.canvas.height = screen.height-29.5;
 
-		GameArea.canvas.height += 25;
-		GameArea.canvas.width += 1;
-		GameArea.canvas.style = "width = 100%; height = 100%";
+	GameArea.canvas.height += 25;
+	GameArea.canvas.width += 1;
+	GameArea.canvas.style = "width = 100%; height = 100%";
 
-		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
-		document.getElementById("canvas1").scrollIntoView();	
-		window.scrollBy(screen.width, 0);
+	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	document.getElementById("canvas1").scrollIntoView();	
+	window.scrollBy(screen.width, 0);
 
 }
 
@@ -1122,9 +1060,9 @@ function fullScreen (){
 
 function increaseGamePieceSize(){
 
-		GamePiece.width += 10;
-		GamePiece.height += 10;
-		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+	GamePiece.width += 10;
+	GamePiece.height += 10;
+	document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
 
 }
 
@@ -1133,13 +1071,13 @@ function increaseGamePieceSize(){
 
 function decreaseGamePieceSize(){
 
-		if (GamePiece.width != 10) {
+	if (GamePiece.width != 10) {
 
-			GamePiece.width -= 10;
-			GamePiece.height -= 10;
-			document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+		GamePiece.width -= 10;
+		GamePiece.height -= 10;
+		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
 
-		}
+	}
 
 }
 
@@ -1294,8 +1232,6 @@ function markBorderTouch() {
 
 		if(game1Loss == false){
 				
-			//GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-			//GamePiece2 = new component(40, 40, "yellow", 0, 0);
 			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 			GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 			GamePiece3 = new component(0, 0, "black", 0, 0);
@@ -1336,8 +1272,6 @@ function enemyTouch(){
 
 	if(game1Loss == false){
 
-		//GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-		//GamePiece2 = new component(40, 40, "yellow", 0, 0);
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 		GamePiece3 = new component(0, 0, "black", 0, 0);
@@ -1529,7 +1463,6 @@ function startGame1(){
 		}
 
 		GamePiece = new component(GamePiece.width, GamePiece.height, "white", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-		//document.getElementById("testButton2").style.display = "block";
 		
 	}
 	
@@ -1622,7 +1555,6 @@ function spawnEnemy (){
 		generateRandomY();
 
 		GamePiece3 = new component(20, 20, "orange", randomX, randomY);
-		//GamePiece3 = new component(20, 20, "orange", Math.floor(Math.random() * (GameArea.canvas.width - GamePiece.width)), Math.floor(Math.random() * (GameArea.canvas.height - GamePiece.height)));
 		enemySpawnSound.play();
 
 	}
