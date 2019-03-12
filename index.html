@@ -74,10 +74,12 @@ canvas {
 <p id="accelLabel">Disabled</p>
 <p id="accelerometer">Unknown</p>
 <button id="accelButton" onclick="accelToggle()">Start/Stop Accelerometer</button> <br><br><br><br>
-<button id="startGameButton" onclick="runTest()">Start Game</button><br><br>
-<button id="spawnEnemyButton" onclick="runTest2()">Spawn Enemy</button><br><br>
+<button id="startGameButton" onclick="startGame1()">Start Game</button><br><br>
+<button id="spawnEnemyButton" onclick="spawnEnemy()">Spawn Enemy</button><br><br>
 <button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
 <button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
+<button id="splitMinisButton" onclick="launchMoreMinis()">Split Minis!</button>
+<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
 
 </div>
 
@@ -98,7 +100,6 @@ canvas {
 //Debug Mode Start
 
 isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-debug = false;
 
 if(isMobile != true){
 
@@ -106,13 +107,20 @@ if(isMobile != true){
 
 }
 
-if(isMobile != true){
+if(isMobile == false){
 	
 	alert("Debug Mode");
 	debug = true;
+	titleScreenActive = false;
 	accelX = 0;
 	accelY = 0;
 	accelZ = 0;
+
+}
+else{
+	
+	debug = false;
+	titleScreenActive = true;
 
 }
 
@@ -165,8 +173,17 @@ var LargeMini5;
 var LargeMini6;
 var LargeMini7;
 var LargeMini8;
+var LargeMini9;
+var LargeMini10;
+var LargeMini11;
+var LargeMini12;
+var LargeMini13;
+var LargeMini14;
+var LargeMini15;
+var LargeMini16;
 largeMiniSize = 3;
 minisLaunched = false;
+moreMinisLaunched = false;
 
 gameAreaSizeFactor = 1;
 position = "(0, 0)";
@@ -185,11 +202,35 @@ document.getElementById("GamePieceSizeLabel").innerHTML = "30 x 30";
 //Start Basic Game Functions
 
 function startGame() {
+	
+	if (debug == true){	
+		
+		GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
+		GameArea.start();
+		increaseAreaSize();
+	
+	}
+	else {
 
-	GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
-	GameArea.start();
-	increaseAreaSize();
-	document.getElementById("lsButton").click();
+		accelToggle();
+	
+		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		GameArea.start();
+		fullScreen();
+		
+		document.querySelector("#canvas1").addEventListener('click', function() {
+			
+			if(titleScreenActive == true){	
+			
+				titleScreenActive = false;
+				GamePiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (GamePiece.width/2)), ((GameArea.canvas.height/2) - (GamePiece.height/2)), 0, 0);
+				startGame1();
+
+			}
+
+		});
+
+	}
 
 }
 
@@ -275,18 +316,13 @@ function component(width, height, color, x, y, speedX, speedY) {
 		if(game1Active == true){
 		
 			if(
-			//GamePiece2.x <= GamePiece.x && GamePiece.x <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y && GamePiece.y <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x+GamePiece.width && GamePiece.x+GamePiece.width <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y+GamePiece.height && GamePiece.y+GamePiece.height <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x+GamePiece.width && GamePiece.x+GamePiece.width <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y && GamePiece.y <= GamePiece2.y+GamePiece2.height
-			//|| GamePiece2.x <= GamePiece.x && GamePiece.x <= GamePiece2.x+GamePiece2.width && GamePiece2.y <= GamePiece.y+GamePiece.height && GamePiece.y+GamePiece.height <= GamePiece2.y+GamePiece2.height
-			
 			GamePiece.x < GamePiece2.x + GamePiece2.width &&
 			GamePiece.x + GamePiece.width > GamePiece2.x &&
 			GamePiece.y < GamePiece2.y + GamePiece2.height &&
 			GamePiece.y + GamePiece.height > GamePiece2.y
 			){
 			
-				runTest();
+				startGame1();
 			
 			}
 		
@@ -433,12 +469,42 @@ function gameScores(){
 
 	if(game1Active == true){
 
-		ctx = GameArea.context;
+		let scores = GameArea.context;
 
-		ctx.font = "25px Arial";
-		ctx.fillStyle = "#00e600";
-		ctx.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
-		ctx.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
+		scores.font = "25px Arial";
+		scores.fillStyle = "#00e600";
+		scores.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
+		scores.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
+
+	}
+
+}
+
+function titleScreen(){
+
+	if(titleScreenActive == true){
+	
+		if(game1Loss == false){	
+	
+			let title = GameArea.context;
+			title.font = "25px Arial";
+			title.fillStyle = "#FFFF00";
+			title.fillText("Simple Movement", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
+		
+		}
+		else {
+
+			let title = GameArea.context;
+			title.font = "25px Arial";
+			title.fillStyle = "red";
+			title.fillText("Try Again?", (GameArea.canvas.width/2)-100, (GameArea.canvas.height/2)-10);
+
+		}		
+	
+		let touchtostart = GameArea.context;
+		touchtostart.font = "22px Arial";
+		touchtostart.fillStyle = "#00e600";
+		touchtostart.fillText("Touch to Start", (GameArea.canvas.width/2)-60, (GameArea.canvas.height/2)+35);
 
 	}
 
@@ -459,6 +525,14 @@ LargeMini5 = new component(0, 0, "black", 0, 0);
 LargeMini6 = new component(0, 0, "black", 0, 0);
 LargeMini7 = new component(0, 0, "black", 0, 0);
 LargeMini8 = new component(0, 0, "black", 0, 0);
+LargeMini9 = new component(0, 0, "black", 0, 0);
+LargeMini10 = new component(0, 0, "black", 0, 0);
+LargeMini11 = new component(0, 0, "black", 0, 0);
+LargeMini12 = new component(0, 0, "black", 0, 0);
+LargeMini13 = new component(0, 0, "black", 0, 0);
+LargeMini14 = new component(0, 0, "black", 0, 0);
+LargeMini15 = new component(0, 0, "black", 0, 0);
+LargeMini16 = new component(0, 0, "black", 0, 0);
 
 
 //Move Enemy Toward Player
@@ -616,6 +690,34 @@ function enemyProjectilePosition(){
 
 		}
 
+		if(moreMinisLaunched == true){
+
+			LargeMini9.x += 0 * enemyProjectileSpeed;
+			LargeMini9.y += 1 * enemyProjectileSpeed;
+
+			LargeMini10.x += 1 * enemyProjectileSpeed;
+			LargeMini10.y += 0 * enemyProjectileSpeed;
+
+			LargeMini11.x += 1 * enemyProjectileSpeed;
+			LargeMini11.y += 0 * enemyProjectileSpeed;
+
+			LargeMini12.x += 0 * enemyProjectileSpeed;
+			LargeMini12.y += -1 * enemyProjectileSpeed;
+
+			LargeMini13.x += 0 * enemyProjectileSpeed;
+			LargeMini13.y += -1 * enemyProjectileSpeed;
+
+			LargeMini14.x += -1 * enemyProjectileSpeed;
+			LargeMini14.y += 0 * enemyProjectileSpeed;
+
+			LargeMini15.x += -1 * enemyProjectileSpeed;
+			LargeMini15.y += 0 * enemyProjectileSpeed;
+
+			LargeMini16.x += 0 * enemyProjectileSpeed;
+			LargeMini16.y += 1 * enemyProjectileSpeed;
+
+		}
+
 		if(
 		GamePiece.x < GamePiece4.x + GamePiece4.width &&
 		GamePiece.x + GamePiece.width > GamePiece4.x &&
@@ -725,7 +827,94 @@ function enemyProjectilePosition(){
 			enemyTouch();	
 
 		}
+
+		if(
+		GamePiece.x < LargeMini9.x + LargeMini9.width &&
+		GamePiece.x + GamePiece.width > LargeMini9.x &&
+		GamePiece.y < LargeMini9.y + LargeMini9.height &&
+		GamePiece.y + GamePiece.height > LargeMini9.y
+		) {
+
+			enemyTouch();	
+
+		}
 		
+		if(
+		GamePiece.x < LargeMini10.x + LargeMini10.width &&
+		GamePiece.x + GamePiece.width > LargeMini10.x &&
+		GamePiece.y < LargeMini10.y + LargeMini10.height &&
+		GamePiece.y + GamePiece.height > LargeMini10.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini11.x + LargeMini11.width &&
+		GamePiece.x + GamePiece.width > LargeMini11.x &&
+		GamePiece.y < LargeMini11.y + LargeMini11.height &&
+		GamePiece.y + GamePiece.height > LargeMini11.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini12.x + LargeMini12.width &&
+		GamePiece.x + GamePiece.width > LargeMini12.x &&
+		GamePiece.y < LargeMini12.y + LargeMini12.height &&
+		GamePiece.y + GamePiece.height > LargeMini12.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini13.x + LargeMini13.width &&
+		GamePiece.x + GamePiece.width > LargeMini13.x &&
+		GamePiece.y < LargeMini13.y + LargeMini13.height &&
+		GamePiece.y + GamePiece.height > LargeMini13.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini14.x + LargeMini14.width &&
+		GamePiece.x + GamePiece.width > LargeMini14.x &&
+		GamePiece.y < LargeMini14.y + LargeMini14.height &&
+		GamePiece.y + GamePiece.height > LargeMini14.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini15.x + LargeMini15.width &&
+		GamePiece.x + GamePiece.width > LargeMini15.x &&
+		GamePiece.y < LargeMini15.y + LargeMini15.height &&
+		GamePiece.y + GamePiece.height > LargeMini15.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		GamePiece.x < LargeMini16.x + LargeMini16.width &&
+		GamePiece.x + GamePiece.width > LargeMini16.x &&
+		GamePiece.y < LargeMini16.y + LargeMini16.height &&
+		GamePiece.y + GamePiece.height > LargeMini16.y
+		) {
+
+			enemyTouch();	
+
+		}
 
 		if(
 		GamePiece4.x < 0 - GamePiece4.width ||
@@ -749,6 +938,7 @@ function enemyProjectilePosition(){
 function updateGameArea() {
 
 	GameArea.clear();
+	titleScreen();
 	GamePiece.newPos();
 	GamePiece.update();
 	GamePiece2.update();
@@ -768,6 +958,14 @@ function updateGameArea() {
 	LargeMini6.update();
 	LargeMini7.update();
 	LargeMini8.update();
+	LargeMini9.update();
+	LargeMini10.update();
+	LargeMini11.update();
+	LargeMini12.update();
+	LargeMini13.update();
+	LargeMini14.update();
+	LargeMini15.update();
+	LargeMini16.update();
 
 }
 
@@ -776,36 +974,7 @@ function updateGameArea() {
 
 function increaseSpeed(){
 
-	/*speed += 1;
-	document.getElementById("speedLabel").innerHTML = speed;*/
-
-	console.log("increaseTest1");
-
-	/*if(speed < 1){
-
-		console.log("increaseTest2");
-
-		if(speed < 0.1) {
-
-			console.log("increaseTest3");
-			speed += 0.01;
-
-		}
-		else {
-
-			console.log("increaseTest4");
-			speed += 0.1;
-
-		}
-
-	}*/
-	//else {
-
-		console.log("increaseTest5");
-		speed += 1;
-
-	//}
-
+	speed += 1;
 	document.getElementById("speedLabel").innerHTML = speed;
 
 }
@@ -817,38 +986,10 @@ function decreaseSpeed(){
 
 	if(speed > 0){
 
-		console.log("decreaseTest1");
-
-		/*speed -= 1;
-		document.getElementById("speedLabel").innerHTML = speed;*/
-
-		if(speed <= 1){
-
-			console.log("decreaseTest2");
-			if(speed <= 0.1){
-
-				console.log("decreaseTest3");
-				speed = (speed+10)-1/100;
-
-			}
-			else {
-
-				console.log("decreaseTest4");
-				speed -= 0.1;
-
-			}
-
-		}
-		else{
-
-			console.log("decreaseTest5");
-			speed -= 1;
-
-		}
+		speed -= 1;
+		document.getElementById("speedLabel").innerHTML = speed;
 
 	}
-
-	document.getElementById("speedLabel").innerHTML = speed;
 
 }
 
@@ -895,17 +1036,22 @@ function decreaseAreaSize(){
 }
 
 
-//(Hopefully) Fit Cavas Size to Mobile Device Screen
+//Fit Cavas Size to Mobile Device Screen
 
 function fullScreen (){
 
-		GameArea.canvas.width = screen.width-6;
-		GameArea.canvas.height = screen.height-29.5;
-		GamePiece.x = (GameArea.canvas.width/2) - (GamePiece.width/2);
-		GamePiece.y = (GameArea.canvas.height/2) - (GamePiece.height/2);
-		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
-		document.getElementById("canvas1").scrollIntoView();	
-		window.scrollBy(screen.width, 0);
+	document.documentElement.style.overflow = "hidden";
+
+	GameArea.canvas.width = screen.width-6;
+	GameArea.canvas.height = screen.height-29.5;
+
+	GameArea.canvas.height += 25;
+	GameArea.canvas.width += 1;
+	GameArea.canvas.style = "width = 100%; height = 100%";
+
+	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	document.getElementById("canvas1").scrollIntoView();	
+	window.scrollBy(screen.width, 0);
 
 }
 
@@ -914,9 +1060,9 @@ function fullScreen (){
 
 function increaseGamePieceSize(){
 
-		GamePiece.width += 10;
-		GamePiece.height += 10;
-		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+	GamePiece.width += 10;
+	GamePiece.height += 10;
+	document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
 
 }
 
@@ -925,13 +1071,13 @@ function increaseGamePieceSize(){
 
 function decreaseGamePieceSize(){
 
-		if (GamePiece.width != 10) {
+	if (GamePiece.width != 10) {
 
-			GamePiece.width -= 10;
-			GamePiece.height -= 10;
-			document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+		GamePiece.width -= 10;
+		GamePiece.height -= 10;
+		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
 
-		}
+	}
 
 }
 
@@ -982,7 +1128,7 @@ function stopPieceX (){
 }
 
 
-////Stop Player Movement Up and Down
+//Stop Player Movement Up and Down
 
 function stopPieceY (){
 
@@ -1032,11 +1178,17 @@ function accelToggle(){
 	if(accel == false && debug == false){
 
 		accel = true;
-		document.getElementById("accelLabel").innerHTML = "Enabled";
-		document.getElementById("accelLabel").style = "color: green";
+		
+		//redundant...
+		if(debug == true){
+
+			document.getElementById("accelLabel").innerHTML = "Enabled";
+			document.getElementById("accelLabel").style = "color: green";
+		
+		}
 
 	}
-	else if(game1Active != true && debug == false){
+	else if(game1Active == false && debug == false){
 
 		accel = false;
 		document.getElementById("accelLabel").innerHTML = "Disabled";
@@ -1080,8 +1232,8 @@ function markBorderTouch() {
 
 		if(game1Loss == false){
 				
-			GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-			GamePiece2 = new component(40, 40, "yellow", 0, 0);
+			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+			GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 			GamePiece3 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
@@ -1090,7 +1242,7 @@ function markBorderTouch() {
 			}
 
 			game1Loss = true;
-			game1Score = 0;
+			titleScreenActive = true;
 			enemyPieceActive = false;
 
 			clearInterval(gamePieceGrowing);
@@ -1120,8 +1272,8 @@ function enemyTouch(){
 
 	if(game1Loss == false){
 
-		GamePiece = new component(GamePiece.width, GamePiece.height, "red", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-		GamePiece2 = new component(40, 40, "yellow", 0, 0);
+		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
 		GamePiece3 = new component(0, 0, "black", 0, 0);
 		GamePiece4 = new component(0, 0, "black", 0, 0);
 
@@ -1129,7 +1281,7 @@ function enemyTouch(){
 		lossSound.play();
 
 		game1Loss = true;
-		game1Score = 0;
+		titleScreenActive = true;
 		enemyPieceActive = false;
 
 		clearInterval(gamePieceGrowing);
@@ -1257,7 +1409,7 @@ function growGamePiece(){
 
 //Game1 Super Function...
 
-function runTest(){
+function startGame1(){
 	
 	if(game1Active == false){
 	
@@ -1266,6 +1418,13 @@ function runTest(){
 		game1HighScore = 0;
 		gameStartSound.play();
 	
+	}
+
+	if(game1Loss == true){
+
+		titleScreenActive = false;
+		game1Score = 0;
+
 	}
 	
 	if(game1Score == 0){
@@ -1292,17 +1451,6 @@ function runTest(){
 	//GamePiece2 = new component(10, 10, "#33d6ff", randomX, randomY);
 
 	if(game1Active == true){
-		
-		if(debug != true){
-
-			accelToggle();
-			GameArea.canvas.width = screen.width-6;
-			GameArea.canvas.height = screen.height-29.5;
-			document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
-			document.getElementById("canvas1").scrollIntoView();
-			window.scrollBy(screen.width, 0);
-
-		}
 
 		if (speed == 0){
 
@@ -1310,12 +1458,11 @@ function runTest(){
 			GamePiece.y = ((GameArea.canvas.height/2) - (GamePiece.height/2));
 			GamePiece.width += 2.5;
 			GamePiece.height += 2.5;
-			speed = 0.75;
+			speed = 0.875;
 
 		}
 
 		GamePiece = new component(GamePiece.width, GamePiece.height, "white", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-		//document.getElementById("testButton2").style.display = "block";
 		
 	}
 	
@@ -1333,7 +1480,7 @@ function runTest(){
 	}
 	else {
 
-		speed += 0.25;
+		speed += 0.125;
 		document.getElementById("speedLabel").innerHTML = speed;
 		GamePiece.width -= 2.5;
 		GamePiece.height -= 2.5;
@@ -1363,7 +1510,7 @@ function runTest(){
 
 	if(game1Score >= 10){
         	
-		runTest2();
+		spawnEnemy();
 
 	}
 	
@@ -1400,7 +1547,7 @@ function runTest(){
 
 //Spawn Enemy
 
-function runTest2 (){
+function spawnEnemy (){
 
 	if(enemyPieceActive == false){
 
@@ -1408,7 +1555,6 @@ function runTest2 (){
 		generateRandomY();
 
 		GamePiece3 = new component(20, 20, "orange", randomX, randomY);
-		//GamePiece3 = new component(20, 20, "orange", Math.floor(Math.random() * (GameArea.canvas.width - GamePiece.width)), Math.floor(Math.random() * (GameArea.canvas.height - GamePiece.height)));
 		enemySpawnSound.play();
 
 	}
@@ -1493,13 +1639,37 @@ function launchMinis (){
 	LargeMini7 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	LargeMini8 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 
+	if(game1Score >= 25){
+
+		setTimeout(launchMoreMinis, 650);
+
+	}
+
 	setTimeout(stopMinis, 7000);
+
+}
+
+function launchMoreMinis (){
+
+	moreMinisLaunched = true;
+
+	miniSplitSound.play();
+
+	LargeMini9 = new component(largeMiniSize, largeMiniSize, "red", LargeMini2.x+(LargeMini2.width/2), LargeMini2.y+(LargeMini2.height/2));
+	LargeMini10 = new component(largeMiniSize, largeMiniSize, "red", LargeMini2.x+(LargeMini2.width/2), LargeMini2.y+(LargeMini2.height/2));
+	LargeMini11 = new component(largeMiniSize, largeMiniSize, "red", LargeMini4.x+(LargeMini4.width/2), LargeMini4.y+(LargeMini4.height/2));
+	LargeMini12 = new component(largeMiniSize, largeMiniSize, "red", LargeMini4.x+(LargeMini4.width/2), LargeMini4.y+(LargeMini4.height/2));
+	LargeMini13 = new component(largeMiniSize, largeMiniSize, "red", LargeMini6.x+(LargeMini6.width/2), LargeMini6.y+(LargeMini6.height/2));
+	LargeMini14 = new component(largeMiniSize, largeMiniSize, "red", LargeMini6.x+(LargeMini6.width/2), LargeMini6.y+(LargeMini6.height/2));
+	LargeMini15 = new component(largeMiniSize, largeMiniSize, "red", LargeMini8.x+(LargeMini8.width/2), LargeMini8.y+(LargeMini8.height/2));
+	LargeMini16 = new component(largeMiniSize, largeMiniSize, "red", LargeMini8.x+(LargeMini8.width/2), LargeMini8.y+(LargeMini8.height/2));
 
 }
 
 function stopMinis (){
 
 	minisLaunched = false;
+	moreMinisLaunched = false;
 
 	LargeMini1 = new component(0, 0, "black", 0, 0);
 	LargeMini2 = new component(0, 0, "black", 0, 0);
@@ -1509,6 +1679,14 @@ function stopMinis (){
 	LargeMini6 = new component(0, 0, "black", 0, 0);
 	LargeMini7 = new component(0, 0, "black", 0, 0);
 	LargeMini8 = new component(0, 0, "black", 0, 0);
+	LargeMini9 = new component(0, 0, "black", 0, 0);
+	LargeMini10 = new component(0, 0, "black", 0, 0);
+	LargeMini11 = new component(0, 0, "black", 0, 0);
+	LargeMini12 = new component(0, 0, "black", 0, 0);
+	LargeMini13 = new component(0, 0, "black", 0, 0);
+	LargeMini14 = new component(0, 0, "black", 0, 0);
+	LargeMini15 = new component(0, 0, "black", 0, 0);
+	LargeMini16 = new component(0, 0, "black", 0, 0);
 
 }
 
@@ -1669,7 +1847,7 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'Space') {
 
-		runTest();
+		startGame1();
 
 	}
 
@@ -1679,11 +1857,12 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'Delete') {
 
-		runTest2();
+		spawnEnemy();
 
 	}
 
 });
+
 
 //Auto Move
 
@@ -1711,9 +1890,11 @@ document.addEventListener('keydown', function(event) {
 
 if(debug == false) {
 
-	document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
+	//document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
 
-	document.getElementById("speedHeader").style.display = "none";
+	document.getElementById("div1").style.display = "none";	
+
+	/*document.getElementById("speedHeader").style.display = "none";
 	document.getElementById("speedLabel").style.display = "none";
 	document.getElementById("decreaseSpeedButton").style.display = "none";
 	document.getElementById("increaseSpeedButton").style.display = "none";
@@ -1736,17 +1917,16 @@ if(debug == false) {
 	document.getElementById("accelLabel").style.display = "none";
 	document.getElementById("accelerometer").style.display = "none";
 	document.getElementById("accelButton").style.display = "none";
-	//document.getElementById("startGameButton").style.display = "none";
+	document.getElementById("startGameButton").style.display = "none";
 	document.getElementById("spawnEnemyButton").style.display = "none";
 	document.getElementById("enemyFireButton").style.display = "none";
 	document.getElementById("enemyFireLargeButton").style.display = "none";
+	document.getElementById("splitMinisButton").style.display = "none";*/
 
 }
 
 
 </script>
-
-<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
 
 </body>
 
