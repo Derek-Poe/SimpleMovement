@@ -161,7 +161,7 @@ testActive = false;
 var GamePiece;
 var PointPiece1;
 var EnemyPiece1;
-var GamePiece4;
+var EnemyProjectile1;
 
 var LargeMain;
 largeMainLaunched = false;
@@ -515,7 +515,7 @@ function titleScreen(){
 
 PointPiece1 = new component(0, 0, "black", 0, 0);
 EnemyPiece1 = new component(0, 0, "black", 0, 0);
-GamePiece4 = new component(0, 0, "black", 0, 0);
+EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 LargeMain = new component(0, 0, "black", 0, 0);
 LargeMini1 = new component(0, 0, "black", 0, 0);
 LargeMini2 = new component(0, 0, "black", 0, 0);
@@ -650,8 +650,8 @@ function enemyProjectilePosition(){
 
 		if(enemyPieceActive == true){
 
-			GamePiece4.x += firePositionX;
-			GamePiece4.y += firePositionY;
+			EnemyProjectile1.x += firePositionX;
+			EnemyProjectile1.y += firePositionY;
 
 		}
 
@@ -719,10 +719,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < GamePiece4.x + GamePiece4.width &&
-		GamePiece.x + GamePiece.width > GamePiece4.x &&
-		GamePiece.y < GamePiece4.y + GamePiece4.height &&
-		GamePiece.y + GamePiece.height > GamePiece4.y
+		GamePiece.x < EnemyProjectile1.x + EnemyProjectile1.width &&
+		GamePiece.x + GamePiece.width > EnemyProjectile1.x &&
+		GamePiece.y < EnemyProjectile1.y + EnemyProjectile1.height &&
+		GamePiece.y + GamePiece.height > EnemyProjectile1.y
 		) {
 
 			enemyTouch();	
@@ -917,13 +917,13 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece4.x < 0 - GamePiece4.width ||
-		GamePiece4.x > GameArea.canvas.width ||
-		GamePiece4.y < 0 - GamePiece4.height ||
-		GamePiece4.y > GameArea.canvas.height
+		EnemyProjectile1.x < 0 - EnemyProjectile1.width ||
+		EnemyProjectile1.x > GameArea.canvas.width ||
+		EnemyProjectile1.y < 0 - EnemyProjectile1.height ||
+		EnemyProjectile1.y > GameArea.canvas.height
 		) {
 
-			GamePiece4 = new component(0, 0, "black", 0, 0);
+			EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 
 		}
 
@@ -943,7 +943,7 @@ function updateGameArea() {
 	GamePiece.update();
 	PointPiece1.update();
 	EnemyPiece1.update();
-	GamePiece4.update();
+	EnemyProjectile1.update();
 	enemyPosition();
 	enemyProjectilePosition();
 	gameScores();
@@ -1275,7 +1275,7 @@ function enemyTouch(){
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
-		GamePiece4 = new component(0, 0, "black", 0, 0);
+		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 
 		game1BGM.stop();
 		lossSound.play();
@@ -1573,7 +1573,7 @@ function enemyFire (){
 		firePositionX = aimPositionX*enemyProjectileSpeed;
 		firePositionY = aimPositionY*enemyProjectileSpeed;
 
-		GamePiece4 = new component(5, 5, "red", EnemyPiece1.x+(EnemyPiece1.width/2), EnemyPiece1.y+(EnemyPiece1.height/2));
+		EnemyProjectile1 = new component(5, 5, "red", EnemyPiece1.x+(EnemyPiece1.width/2), EnemyPiece1.y+(EnemyPiece1.height/2));
 		pewSound.play();
 	
 	}
