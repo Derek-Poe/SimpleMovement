@@ -62,10 +62,10 @@ canvas {
 <button id="decreaseAreaSizeButton" onclick="decreaseAreaSize()">Decrease Area Size (q)</button>
 <button id="fullScreenButton" onclick="fullScreen()">Full Screen</button>
 <button id="increaseAreaSizeButton" onclick="increaseAreaSize()">Increase Area Size (w)</button><br><br>
-<label id="gamePieceSizeHeader">Current Piece Size:</label>
-<p id="GamePieceSizeLabel">unknown</p>
-<button id="decreaseGamePieceSizeButton" onclick="decreaseGamePieceSize()">Decrease Piece Size (a)</button>
-<button id="increaseGamePieceSizeButton" onclick="increaseGamePieceSize()">Increase Piece Size (s)</button><br><br>
+<label id="playerPieceSizeHeader">Current Piece Size:</label>
+<p id="PlayerPieceSizeLabel">unknown</p>
+<button id="decreasePlayerPieceSizeButton" onclick="decreasePlayerPieceSize()">Decrease Piece Size (a)</button>
+<button id="increasePlayerPieceSizeButton" onclick="increasePlayerPieceSize()">Increase Piece Size (s)</button><br><br>
 <label id="autoHeader">Auto:</label>
 <p id="autoEnableLabel">Disabled</p>
 <button id="stopAutoButton" onclick="stopAuto()">Stop Auto (Esc)</button>
@@ -130,7 +130,7 @@ else{
 speed = 1;
 growthRate = 1.25;
 growthStarted = false;
-var gamePieceGrowing;
+var playerPieceGrowing;
 
 enemySpeed = 0.5;
 enemyProjectileSpeed = 3.25;
@@ -158,7 +158,7 @@ enemyPieceActive = false;
 gamePaused = false;
 testActive = false;
 
-var GamePiece;
+var PlayerPiece;
 var PointPiece1;
 var EnemyPiece1;
 var EnemyProjectile1;
@@ -196,7 +196,7 @@ rcolor = "";
 
 document.getElementById("speedLabel").innerHTML = speed;
 document.getElementById("positionLabel").innerHTML = position;
-document.getElementById("GamePieceSizeLabel").innerHTML = "30 x 30";
+document.getElementById("PlayerPieceSizeLabel").innerHTML = "30 x 30";
 
 
 //Start Basic Game Functions
@@ -205,7 +205,7 @@ function startGame() {
 	
 	if (debug == true){	
 		
-		GamePiece = new component(30, 30, "white", 305, 165, 0, 0);
+		PlayerPiece = new component(30, 30, "white", 305, 165, 0, 0);
 		GameArea.start();
 		increaseAreaSize();
 	
@@ -214,7 +214,7 @@ function startGame() {
 
 		accelToggle();
 	
-		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
 		fullScreen();
 		
@@ -223,7 +223,7 @@ function startGame() {
 			if(titleScreenActive == true){	
 			
 				titleScreenActive = false;
-				GamePiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (GamePiece.width/2)), ((GameArea.canvas.height/2) - (GamePiece.height/2)), 0, 0);
+				PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), 0, 0);
 				startGame1();
 
 			}
@@ -260,11 +260,11 @@ var GameArea = {
 }
 
 
-//Create GamePiece
+//Create PlayerPiece
 
 function component(width, height, color, x, y, speedX, speedY) {
 
-	//GamePiece Attribute Declarations
+	//PlayerPiece Attribute Declarations
 
 	this.width = width;
 	this.height = height;
@@ -273,7 +273,7 @@ function component(width, height, color, x, y, speedX, speedY) {
 	this.x = x;
 	this.y = y;
 
-	//Add GamePiece to Canvas
+	//Add PlayerPiece to Canvas
 
 	this.update = function() {
 
@@ -283,31 +283,31 @@ function component(width, height, color, x, y, speedX, speedY) {
 
 	}
 
-	//Move GamePiece
+	//Move PlayerPiece
 
 	this.newPos = function() {
 
-		//GamePiece Speed Declarations
+		//PlayerPiece Speed Declarations
 
 		this.x += this.speedX;
 		this.y += this.speedY;
-		position = "("+Math.round(GamePiece.x)+", "+Math.round(GamePiece.y)+")";
+		position = "("+Math.round(PlayerPiece.x)+", "+Math.round(PlayerPiece.y)+")";
 		document.getElementById("positionLabel").innerHTML = position;
 		
-		//Move GamePiece with Accelerometer		
+		//Move PlayerPiece with Accelerometer		
 
 		accelX = accelX * speed;
 		accelY = accelY * speed;
 
 		if(accel == true){
 
-			GamePiece.speedY = accelX;
+			PlayerPiece.speedY = accelX;
 
 		}
 
 		if(accel == true){
 
-			GamePiece.speedX = accelY;
+			PlayerPiece.speedX = accelY;
 
 		}
 
@@ -316,10 +316,10 @@ function component(width, height, color, x, y, speedX, speedY) {
 		if(game1Active == true){
 		
 			if(
-			GamePiece.x < PointPiece1.x + PointPiece1.width &&
-			GamePiece.x + GamePiece.width > PointPiece1.x &&
-			GamePiece.y < PointPiece1.y + PointPiece1.height &&
-			GamePiece.y + GamePiece.height > PointPiece1.y
+			PlayerPiece.x < PointPiece1.x + PointPiece1.width &&
+			PlayerPiece.x + PlayerPiece.width > PointPiece1.x &&
+			PlayerPiece.y < PointPiece1.y + PointPiece1.height &&
+			PlayerPiece.y + PlayerPiece.height > PointPiece1.y
 			){
 			
 				startGame1();
@@ -336,32 +336,32 @@ function component(width, height, color, x, y, speedX, speedY) {
 
 				randomColor();
 				console.log(rcolor);
-				GamePiece = new component(GamePiece.width, GamePiece.height, rcolor, GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-				GamePiece.speedY = speed;
+				PlayerPiece = new component(PlayerPiece.width, PlayerPiece.height, rcolor, PlayerPiece.x, PlayerPiece.y, PlayerPiece.speedX, PlayerPiece.speedY);
+				PlayerPiece.speedY = speed;
 
 			}
-			else if (this.y >= GameArea.canvas.height - GamePiece.height + 1){
+			else if (this.y >= GameArea.canvas.height - PlayerPiece.height + 1){
 
 				randomColor();
 				console.log(rcolor);
-				GamePiece = new component(GamePiece.width, GamePiece.height, rcolor, GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-				GamePiece.speedY = speed*-1;
+				PlayerPiece = new component(PlayerPiece.width, PlayerPiece.height, rcolor, PlayerPiece.x, PlayerPiece.y, PlayerPiece.speedX, PlayerPiece.speedY);
+				PlayerPiece.speedY = speed*-1;
 
 			}
 			else if (this.x <= -1){
 
 				randomColor();
 				console.log(rcolor);
-				GamePiece = new component(GamePiece.width, GamePiece.height, rcolor, GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-				GamePiece.speedX = speed;
+				PlayerPiece = new component(PlayerPiece.width, PlayerPiece.height, rcolor, PlayerPiece.x, PlayerPiece.y, PlayerPiece.speedX, PlayerPiece.speedY);
+				PlayerPiece.speedX = speed;
 
 			}
-			else if (this.x >= GameArea.canvas.width - GamePiece.width + 1){
+			else if (this.x >= GameArea.canvas.width - PlayerPiece.width + 1){
 				
 				randomColor();
 				console.log(rcolor);
-				GamePiece = new component(GamePiece.width, GamePiece.height, rcolor, GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
-				GamePiece.speedX = speed*-1;
+				PlayerPiece = new component(PlayerPiece.width, PlayerPiece.height, rcolor, PlayerPiece.x, PlayerPiece.y, PlayerPiece.speedX, PlayerPiece.speedY);
+				PlayerPiece.speedX = speed*-1;
 
 			}
 
@@ -377,10 +377,10 @@ function component(width, height, color, x, y, speedX, speedY) {
 					this.y = 0;
 
 				}
-				else if (this.y >= GameArea.canvas.height - GamePiece.height + 1){
+				else if (this.y >= GameArea.canvas.height - PlayerPiece.height + 1){
 
 					this.x = 0;
-					this.y = GameArea.canvas.height - GamePiece.height;
+					this.y = GameArea.canvas.height - PlayerPiece.height;
 
 				}
 				else {
@@ -399,9 +399,9 @@ function component(width, height, color, x, y, speedX, speedY) {
 				this.y = 0;
 
 			}
-			else if (this.x >= GameArea.canvas.width - GamePiece.width + 1){
+			else if (this.x >= GameArea.canvas.width - PlayerPiece.width + 1){
 
-				this.x = GameArea.canvas.width - GamePiece.width;
+				this.x = GameArea.canvas.width - PlayerPiece.width;
 				this.y = 0;
 
 			}
@@ -413,45 +413,45 @@ function component(width, height, color, x, y, speedX, speedY) {
 			}
 
 		}
-		else if (this.x >= GameArea.canvas.width - GamePiece.width + 1){
+		else if (this.x >= GameArea.canvas.width - PlayerPiece.width + 1){
 		
 			if (this.y <= -1){
 
-				this.x = GameArea.canvas.width - GamePiece.width;
+				this.x = GameArea.canvas.width - PlayerPiece.width;
 				this.y = 0;
 
 			}
-			else if (this.y >= GameArea.canvas.height - GamePiece.height + 1){
+			else if (this.y >= GameArea.canvas.height - PlayerPiece.height + 1){
 
-				this.x = GameArea.canvas.width - GamePiece.width;
-				this.y = GameArea.canvas.height - GamePiece.height;
+				this.x = GameArea.canvas.width - PlayerPiece.width;
+				this.y = GameArea.canvas.height - PlayerPiece.height;
 
 			}
 			else {
 
-				this.x = GameArea.canvas.width - GamePiece.width;
+				this.x = GameArea.canvas.width - PlayerPiece.width;
 				markBorderTouch();
 
 			}
 
 		}
-		else if (this.y >= GameArea.canvas.height - GamePiece.height + 1){
+		else if (this.y >= GameArea.canvas.height - PlayerPiece.height + 1){
 
-			if (this.x >= GameArea.canvas.width - GamePiece.width + 1){
+			if (this.x >= GameArea.canvas.width - PlayerPiece.width + 1){
 
-				this.x = GameArea.canvas.width - GamePiece.width;
-				this.y = GameArea.canvas.height - GamePiece.height;
+				this.x = GameArea.canvas.width - PlayerPiece.width;
+				this.y = GameArea.canvas.height - PlayerPiece.height;
 
 			}
 			else if (this.x <= -1){
 
 				this.x = 0;
-				this.y = GameArea.canvas.height - GamePiece.height;
+				this.y = GameArea.canvas.height - PlayerPiece.height;
 
 			}
 			else {
 
-				this.y = GameArea.canvas.height - GamePiece.height;
+				this.y = GameArea.canvas.height - PlayerPiece.height;
 				markBorderTouch();
 
 			}
@@ -511,7 +511,7 @@ function titleScreen(){
 }
 
 
-//GamePiece and Enemy Projectile Creations
+//PlayerPiece and Enemy Projectile Creations
 
 PointPiece1 = new component(0, 0, "black", 0, 0);
 EnemyPiece1 = new component(0, 0, "black", 0, 0);
@@ -539,12 +539,12 @@ LargeMini16 = new component(0, 0, "black", 0, 0);
 
 function enemySpeedCalculation(){
 	
-	if(EnemyPiece1.x+(EnemyPiece1.width/2) < GamePiece.x+(GamePiece.width/2)){
+	if(EnemyPiece1.x+(EnemyPiece1.width/2) < PlayerPiece.x+(PlayerPiece.width/2)){
 
 		enemySpeedX = enemySpeed;
 
 	}
-	else if(EnemyPiece1.x+(EnemyPiece1.width/2) > GamePiece.x+(GamePiece.width/2)){
+	else if(EnemyPiece1.x+(EnemyPiece1.width/2) > PlayerPiece.x+(PlayerPiece.width/2)){
 
 		enemySpeedX = enemySpeed*-1;
 
@@ -555,12 +555,12 @@ function enemySpeedCalculation(){
 
 	}
 
-	if(EnemyPiece1.y+(EnemyPiece1.height/2) < GamePiece.y+(GamePiece.height/2)){
+	if(EnemyPiece1.y+(EnemyPiece1.height/2) < PlayerPiece.y+(PlayerPiece.height/2)){
 
 		enemySpeedY = enemySpeed;
 
 	}
-	else if(EnemyPiece1.y+(EnemyPiece1.height/2) > GamePiece.y+(GamePiece.height/2)){
+	else if(EnemyPiece1.y+(EnemyPiece1.height/2) > PlayerPiece.y+(PlayerPiece.height/2)){
 
 		enemySpeedY = enemySpeed*-1;
 
@@ -578,33 +578,33 @@ function enemySpeedCalculation(){
 
 function enemyAimCalculation (){
 	
-	if(EnemyPiece1.x >= GamePiece.x-20 && EnemyPiece1.x <= GamePiece.x+GamePiece.height+20){
+	if(EnemyPiece1.x >= PlayerPiece.x-20 && EnemyPiece1.x <= PlayerPiece.x+PlayerPiece.height+20){
 
 		aimPositionX = 0;
 
 	}
-	else if(EnemyPiece1.x < GamePiece.x){
+	else if(EnemyPiece1.x < PlayerPiece.x){
 		
 		aimPositionX = 1;
 
 	}
-	else if(EnemyPiece1.x > GamePiece.x){
+	else if(EnemyPiece1.x > PlayerPiece.x){
 
 		aimPositionX = -1;
 
 	}
 
-	if(EnemyPiece1.y >= GamePiece.y-20 && EnemyPiece1.y <= GamePiece.y+GamePiece.height+20){
+	if(EnemyPiece1.y >= PlayerPiece.y-20 && EnemyPiece1.y <= PlayerPiece.y+PlayerPiece.height+20){
 
 		aimPositionY = 0;
 
 	}
-	else if(EnemyPiece1.y < GamePiece.y){
+	else if(EnemyPiece1.y < PlayerPiece.y){
 
 		aimPositionY = 1;
 
 	}
-	else if(EnemyPiece1.y > GamePiece.y){
+	else if(EnemyPiece1.y > PlayerPiece.y){
 
 		aimPositionY = -1;
 
@@ -627,10 +627,10 @@ function enemyPosition(){
 		}
 
 		if(
-		GamePiece.x < EnemyPiece1.x + EnemyPiece1.width &&
-		GamePiece.x + GamePiece.width > EnemyPiece1.x &&
-		GamePiece.y < EnemyPiece1.y + EnemyPiece1.height &&
-		GamePiece.y + GamePiece.height > EnemyPiece1.y
+		PlayerPiece.x < EnemyPiece1.x + EnemyPiece1.width &&
+		PlayerPiece.x + PlayerPiece.width > EnemyPiece1.x &&
+		PlayerPiece.y < EnemyPiece1.y + EnemyPiece1.height &&
+		PlayerPiece.y + PlayerPiece.height > EnemyPiece1.y
 		) {
 
 			enemyTouch();	
@@ -719,10 +719,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < EnemyProjectile1.x + EnemyProjectile1.width &&
-		GamePiece.x + GamePiece.width > EnemyProjectile1.x &&
-		GamePiece.y < EnemyProjectile1.y + EnemyProjectile1.height &&
-		GamePiece.y + GamePiece.height > EnemyProjectile1.y
+		PlayerPiece.x < EnemyProjectile1.x + EnemyProjectile1.width &&
+		PlayerPiece.x + PlayerPiece.width > EnemyProjectile1.x &&
+		PlayerPiece.y < EnemyProjectile1.y + EnemyProjectile1.height &&
+		PlayerPiece.y + PlayerPiece.height > EnemyProjectile1.y
 		) {
 
 			enemyTouch();	
@@ -730,10 +730,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMain.x + LargeMain.width &&
-		GamePiece.x + GamePiece.width > LargeMain.x &&
-		GamePiece.y < LargeMain.y + LargeMain.height &&
-		GamePiece.y + GamePiece.height > LargeMain.y
+		PlayerPiece.x < LargeMain.x + LargeMain.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMain.x &&
+		PlayerPiece.y < LargeMain.y + LargeMain.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMain.y
 		) {
 
 			enemyTouch();	
@@ -741,98 +741,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini1.x + LargeMini1.width &&
-		GamePiece.x + GamePiece.width > LargeMini1.x &&
-		GamePiece.y < LargeMini1.y + LargeMini1.height &&
-		GamePiece.y + GamePiece.height > LargeMini1.y
-		) {
-
-			enemyTouch();	
-
-		}
-		
-		if(
-		GamePiece.x < LargeMini2.x + LargeMini2.width &&
-		GamePiece.x + GamePiece.width > LargeMini2.x &&
-		GamePiece.y < LargeMini2.y + LargeMini2.height &&
-		GamePiece.y + GamePiece.height > LargeMini2.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini3.x + LargeMini3.width &&
-		GamePiece.x + GamePiece.width > LargeMini3.x &&
-		GamePiece.y < LargeMini3.y + LargeMini3.height &&
-		GamePiece.y + GamePiece.height > LargeMini3.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini4.x + LargeMini4.width &&
-		GamePiece.x + GamePiece.width > LargeMini4.x &&
-		GamePiece.y < LargeMini4.y + LargeMini4.height &&
-		GamePiece.y + GamePiece.height > LargeMini4.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini5.x + LargeMini5.width &&
-		GamePiece.x + GamePiece.width > LargeMini5.x &&
-		GamePiece.y < LargeMini5.y + LargeMini5.height &&
-		GamePiece.y + GamePiece.height > LargeMini5.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini6.x + LargeMini6.width &&
-		GamePiece.x + GamePiece.width > LargeMini6.x &&
-		GamePiece.y < LargeMini6.y + LargeMini6.height &&
-		GamePiece.y + GamePiece.height > LargeMini6.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini7.x + LargeMini7.width &&
-		GamePiece.x + GamePiece.width > LargeMini7.x &&
-		GamePiece.y < LargeMini7.y + LargeMini7.height &&
-		GamePiece.y + GamePiece.height > LargeMini7.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini8.x + LargeMini8.width &&
-		GamePiece.x + GamePiece.width > LargeMini8.x &&
-		GamePiece.y < LargeMini8.y + LargeMini8.height &&
-		GamePiece.y + GamePiece.height > LargeMini8.y
-		) {
-
-			enemyTouch();	
-
-		}
-
-		if(
-		GamePiece.x < LargeMini9.x + LargeMini9.width &&
-		GamePiece.x + GamePiece.width > LargeMini9.x &&
-		GamePiece.y < LargeMini9.y + LargeMini9.height &&
-		GamePiece.y + GamePiece.height > LargeMini9.y
+		PlayerPiece.x < LargeMini1.x + LargeMini1.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini1.x &&
+		PlayerPiece.y < LargeMini1.y + LargeMini1.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini1.y
 		) {
 
 			enemyTouch();	
@@ -840,10 +752,10 @@ function enemyProjectilePosition(){
 		}
 		
 		if(
-		GamePiece.x < LargeMini10.x + LargeMini10.width &&
-		GamePiece.x + GamePiece.width > LargeMini10.x &&
-		GamePiece.y < LargeMini10.y + LargeMini10.height &&
-		GamePiece.y + GamePiece.height > LargeMini10.y
+		PlayerPiece.x < LargeMini2.x + LargeMini2.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini2.x &&
+		PlayerPiece.y < LargeMini2.y + LargeMini2.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini2.y
 		) {
 
 			enemyTouch();	
@@ -851,10 +763,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini11.x + LargeMini11.width &&
-		GamePiece.x + GamePiece.width > LargeMini11.x &&
-		GamePiece.y < LargeMini11.y + LargeMini11.height &&
-		GamePiece.y + GamePiece.height > LargeMini11.y
+		PlayerPiece.x < LargeMini3.x + LargeMini3.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini3.x &&
+		PlayerPiece.y < LargeMini3.y + LargeMini3.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini3.y
 		) {
 
 			enemyTouch();	
@@ -862,10 +774,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini12.x + LargeMini12.width &&
-		GamePiece.x + GamePiece.width > LargeMini12.x &&
-		GamePiece.y < LargeMini12.y + LargeMini12.height &&
-		GamePiece.y + GamePiece.height > LargeMini12.y
+		PlayerPiece.x < LargeMini4.x + LargeMini4.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini4.x &&
+		PlayerPiece.y < LargeMini4.y + LargeMini4.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini4.y
 		) {
 
 			enemyTouch();	
@@ -873,10 +785,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini13.x + LargeMini13.width &&
-		GamePiece.x + GamePiece.width > LargeMini13.x &&
-		GamePiece.y < LargeMini13.y + LargeMini13.height &&
-		GamePiece.y + GamePiece.height > LargeMini13.y
+		PlayerPiece.x < LargeMini5.x + LargeMini5.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini5.x &&
+		PlayerPiece.y < LargeMini5.y + LargeMini5.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini5.y
 		) {
 
 			enemyTouch();	
@@ -884,10 +796,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini14.x + LargeMini14.width &&
-		GamePiece.x + GamePiece.width > LargeMini14.x &&
-		GamePiece.y < LargeMini14.y + LargeMini14.height &&
-		GamePiece.y + GamePiece.height > LargeMini14.y
+		PlayerPiece.x < LargeMini6.x + LargeMini6.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini6.x &&
+		PlayerPiece.y < LargeMini6.y + LargeMini6.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini6.y
 		) {
 
 			enemyTouch();	
@@ -895,10 +807,10 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini15.x + LargeMini15.width &&
-		GamePiece.x + GamePiece.width > LargeMini15.x &&
-		GamePiece.y < LargeMini15.y + LargeMini15.height &&
-		GamePiece.y + GamePiece.height > LargeMini15.y
+		PlayerPiece.x < LargeMini7.x + LargeMini7.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini7.x &&
+		PlayerPiece.y < LargeMini7.y + LargeMini7.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini7.y
 		) {
 
 			enemyTouch();	
@@ -906,10 +818,98 @@ function enemyProjectilePosition(){
 		}
 
 		if(
-		GamePiece.x < LargeMini16.x + LargeMini16.width &&
-		GamePiece.x + GamePiece.width > LargeMini16.x &&
-		GamePiece.y < LargeMini16.y + LargeMini16.height &&
-		GamePiece.y + GamePiece.height > LargeMini16.y
+		PlayerPiece.x < LargeMini8.x + LargeMini8.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini8.x &&
+		PlayerPiece.y < LargeMini8.y + LargeMini8.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini8.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini9.x + LargeMini9.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini9.x &&
+		PlayerPiece.y < LargeMini9.y + LargeMini9.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini9.y
+		) {
+
+			enemyTouch();	
+
+		}
+		
+		if(
+		PlayerPiece.x < LargeMini10.x + LargeMini10.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini10.x &&
+		PlayerPiece.y < LargeMini10.y + LargeMini10.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini10.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini11.x + LargeMini11.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini11.x &&
+		PlayerPiece.y < LargeMini11.y + LargeMini11.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini11.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini12.x + LargeMini12.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini12.x &&
+		PlayerPiece.y < LargeMini12.y + LargeMini12.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini12.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini13.x + LargeMini13.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini13.x &&
+		PlayerPiece.y < LargeMini13.y + LargeMini13.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini13.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini14.x + LargeMini14.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini14.x &&
+		PlayerPiece.y < LargeMini14.y + LargeMini14.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini14.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini15.x + LargeMini15.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini15.x &&
+		PlayerPiece.y < LargeMini15.y + LargeMini15.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini15.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < LargeMini16.x + LargeMini16.width &&
+		PlayerPiece.x + PlayerPiece.width > LargeMini16.x &&
+		PlayerPiece.y < LargeMini16.y + LargeMini16.height &&
+		PlayerPiece.y + PlayerPiece.height > LargeMini16.y
 		) {
 
 			enemyTouch();	
@@ -939,8 +939,8 @@ function updateGameArea() {
 
 	GameArea.clear();
 	titleScreen();
-	GamePiece.newPos();
-	GamePiece.update();
+	PlayerPiece.newPos();
+	PlayerPiece.update();
 	PointPiece1.update();
 	EnemyPiece1.update();
 	EnemyProjectile1.update();
@@ -1011,8 +1011,8 @@ function increaseAreaSize(){
 	gameAreaSizeFactor += 0.25;
 	GameArea.canvas.width = (gameAreaSizeFactor * 20)*16;
 	GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
-	GamePiece.x = (GameArea.canvas.width/2) - (GamePiece.width/2);
-	GamePiece.y = (GameArea.canvas.height/2) - (GamePiece.height/2);
+	PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
+	PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
 
 }
@@ -1027,8 +1027,8 @@ function decreaseAreaSize(){
 		gameAreaSizeFactor -= 0.25;
 		GameArea.canvas.width = (gameAreaSizeFactor * 20)*16;
 		GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
-		GamePiece.x = (GameArea.canvas.width/2) - (GamePiece.width/2);
-		GamePiece.y = (GameArea.canvas.height/2) - (GamePiece.height/2);
+		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
+		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
 	
 	}
@@ -1058,24 +1058,24 @@ function fullScreen (){
 
 //Increase Player Size
 
-function increaseGamePieceSize(){
+function increasePlayerPieceSize(){
 
-	GamePiece.width += 10;
-	GamePiece.height += 10;
-	document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+	PlayerPiece.width += 10;
+	PlayerPiece.height += 10;
+	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 }
 
 
 //Decrease Player Size
 
-function decreaseGamePieceSize(){
+function decreasePlayerPieceSize(){
 
-	if (GamePiece.width != 10) {
+	if (PlayerPiece.width != 10) {
 
-		GamePiece.width -= 10;
-		GamePiece.height -= 10;
-		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+		PlayerPiece.width -= 10;
+		PlayerPiece.height -= 10;
+		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 	}
 
@@ -1086,25 +1086,25 @@ function decreaseGamePieceSize(){
 
 function startLeft (){
 
-	GamePiece.speedX = speed*-1;
+	PlayerPiece.speedX = speed*-1;
 
 }
 
 function startRight (){
 
-	GamePiece.speedX = speed;
+	PlayerPiece.speedX = speed;
 
 }
 
 function startUp (){
 
-	GamePiece.speedY = speed*-1;
+	PlayerPiece.speedY = speed*-1;
 
 }
 
 function startDown (){
 
-	GamePiece.speedY = speed;
+	PlayerPiece.speedY = speed;
 
 }
 
@@ -1116,12 +1116,12 @@ function stopPieceX (){
 	if(auto == true){
 		
 		stopAuto();
-		GamePiece.speedX = 0;
+		PlayerPiece.speedX = 0;
 
 	}
 	else {
 
-		GamePiece.speedX = 0;
+		PlayerPiece.speedX = 0;
 
 	}
 
@@ -1135,12 +1135,12 @@ function stopPieceY (){
 	if(auto == true){
 		
 		stopAuto();
-		GamePiece.speedY = 0;
+		PlayerPiece.speedY = 0;
 
 	}
 	else {
 
-		GamePiece.speedY = 0;
+		PlayerPiece.speedY = 0;
 
 	}
 
@@ -1155,8 +1155,8 @@ function startAuto(){
 	game1Active = false;
 	document.getElementById("autoEnableLabel").innerHTML = "Enabled";
 	document.getElementById("autoEnableLabel").style = "color: green";
-	GamePiece.speedY = speed-(speed*2);
-	GamePiece.speedX = speed;
+	PlayerPiece.speedY = speed-(speed*2);
+	PlayerPiece.speedX = speed;
 
 }
 
@@ -1165,8 +1165,8 @@ function stopAuto(){
 	auto = false;
 	document.getElementById("autoEnableLabel").innerHTML = "Disabled";
 	document.getElementById("autoEnableLabel").style = "color: black";	
-	GamePiece.speedY = 0;
-	GamePiece.speedX = 0;
+	PlayerPiece.speedY = 0;
+	PlayerPiece.speedX = 0;
 
 }
 
@@ -1232,7 +1232,7 @@ function markBorderTouch() {
 
 		if(game1Loss == false){
 				
-			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+			PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 			PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 
@@ -1245,7 +1245,7 @@ function markBorderTouch() {
 			titleScreenActive = true;
 			enemyPieceActive = false;
 
-			clearInterval(gamePieceGrowing);
+			clearInterval(playerPieceGrowing);
 			growthStarted = false;
 			
 			clearInterval(activelyFiring);
@@ -1272,7 +1272,7 @@ function enemyTouch(){
 
 	if(game1Loss == false){
 
-		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
+		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
 		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
@@ -1284,7 +1284,7 @@ function enemyTouch(){
 		titleScreenActive = true;
 		enemyPieceActive = false;
 
-		clearInterval(gamePieceGrowing);
+		clearInterval(playerPieceGrowing);
 		growthStarted = false;
 
 		clearInterval(activelyFiring);
@@ -1312,9 +1312,9 @@ function generateRandomX (){
 
 	if(sideChoice == 0){
 
-		randomDecision = Math.floor(Math.random() * (GamePiece.x));
+		randomDecision = Math.floor(Math.random() * (PlayerPiece.x));
 
-		if(randomDecision > (GamePiece.x - 50)){
+		if(randomDecision > (PlayerPiece.x - 50)){
 
 			generateRandomX();			
 
@@ -1328,9 +1328,9 @@ function generateRandomX (){
 	}
 	else if(sideChoice == 1){
 
-		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.width - EnemyPiece1.width) - (GamePiece.x+GamePiece.width) ) + (GamePiece.x+GamePiece.width));
+		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.width - EnemyPiece1.width) - (PlayerPiece.x+PlayerPiece.width) ) + (PlayerPiece.x+PlayerPiece.width));
 
-		if(randomDecision < (GamePiece.x + GamePiece.width + 50)){
+		if(randomDecision < (PlayerPiece.x + PlayerPiece.width + 50)){
 			
 			generateRandomX();			
 
@@ -1352,9 +1352,9 @@ function generateRandomY (){
 
 	if(sideChoice == 0){
 
-		randomDecision = Math.floor(Math.random() * (GamePiece.y));
+		randomDecision = Math.floor(Math.random() * (PlayerPiece.y));
 
-		if(randomDecision > (GamePiece.y - 50)){
+		if(randomDecision > (PlayerPiece.y - 50)){
 
 			generateRandomY();			
 
@@ -1369,9 +1369,9 @@ function generateRandomY (){
 	}
 	else if(sideChoice == 1){
 
-		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.height - EnemyPiece1.height) - (GamePiece.y+GamePiece.height)) + (GamePiece.y+GamePiece.height));
+		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.height - EnemyPiece1.height) - (PlayerPiece.y+PlayerPiece.height)) + (PlayerPiece.y+PlayerPiece.height));
 
-		if(randomDecision < (GamePiece.y + GamePiece.height + 50)){
+		if(randomDecision < (PlayerPiece.y + PlayerPiece.height + 50)){
 
 			generateRandomY();			
 
@@ -1398,11 +1398,11 @@ function randomColor() {
 
 //Increase Player Size by Growth Rate
 
-function growGamePiece(){
+function growPlayerPiece(){
 
-	GamePiece.width += growthRate;
-	GamePiece.height += growthRate;
-	document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+	PlayerPiece.width += growthRate;
+	PlayerPiece.height += growthRate;
+	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 }
 
@@ -1435,9 +1435,9 @@ function startGame1(){
 
 	if(growthStarted == false && game1Score == 0){
 	
-		GamePiece.width += 2.5;
-		GamePiece.height += 2.5;
-		gamePieceGrowing = setInterval(growGamePiece, 1000);
+		PlayerPiece.width += 2.5;
+		PlayerPiece.height += 2.5;
+		playerPieceGrowing = setInterval(growPlayerPiece, 1000);
 		growthStarted = true;
 
 	}
@@ -1447,22 +1447,22 @@ function startGame1(){
 	generateRandomX();
 	generateRandomY();
 	
-	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - GamePiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - GamePiece.height - 5) + 5));
+	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
 	//PointPiece1 = new component(10, 10, "#33d6ff", randomX, randomY);
 
 	if(game1Active == true){
 
 		if (speed == 0){
 
-			GamePiece.x = ((GameArea.canvas.width/2) - (GamePiece.width/2));
-			GamePiece.y = ((GameArea.canvas.height/2) - (GamePiece.height/2));
-			GamePiece.width += 2.5;
-			GamePiece.height += 2.5;
+			PlayerPiece.x = ((GameArea.canvas.width/2) - (PlayerPiece.width/2));
+			PlayerPiece.y = ((GameArea.canvas.height/2) - (PlayerPiece.height/2));
+			PlayerPiece.width += 2.5;
+			PlayerPiece.height += 2.5;
 			speed = 0.875;
 
 		}
 
-		GamePiece = new component(GamePiece.width, GamePiece.height, "white", GamePiece.x, GamePiece.y, GamePiece.speedX, GamePiece.speedY);
+		PlayerPiece = new component(PlayerPiece.width, PlayerPiece.height, "white", PlayerPiece.x, PlayerPiece.y, PlayerPiece.speedX, PlayerPiece.speedY);
 		
 	}
 	
@@ -1470,10 +1470,10 @@ function startGame1(){
 		
 		game1Loss = false;
 		game1Score = 0;
-		GamePiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (GamePiece.width/2)), ((GameArea.canvas.height/2) - (GamePiece.height/2)), GamePiece.speedX, GamePiece.speedY);
-		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
-		GamePiece.x = (GameArea.canvas.width/2) - (GamePiece.width/2);
-		GamePiece.y = (GameArea.canvas.height/2) - (GamePiece.height/2);
+		PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), PlayerPiece.speedX, PlayerPiece.speedY);
+		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
+		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		game1BGM.play();
 		resetSpeed();
 		
@@ -1482,9 +1482,9 @@ function startGame1(){
 
 		speed += 0.125;
 		document.getElementById("speedLabel").innerHTML = speed;
-		GamePiece.width -= 2.5;
-		GamePiece.height -= 2.5;
-		document.getElementById("GamePieceSizeLabel").innerHTML = GamePiece.width+" x "+GamePiece.height;
+		PlayerPiece.width -= 2.5;
+		PlayerPiece.height -= 2.5;
+		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 		
 		if(game1Score <= 98){
 
@@ -1817,7 +1817,7 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'KeyS') {
 
-		increaseGamePieceSize();
+		increasePlayerPieceSize();
 
 	}
 
@@ -1827,7 +1827,7 @@ document.addEventListener('keydown', function(event) {
 
 	if (event.code == 'KeyA') {
 
-		decreaseGamePieceSize();
+		decreasePlayerPieceSize();
 
 	}
 
@@ -1905,10 +1905,10 @@ if(debug == false) {
 	document.getElementById("decreaseAreaSizeButton").style.display = "none";
 	document.getElementById("fullScreenButton").style.display = "none";
 	document.getElementById("increaseAreaSizeButton").style.display = "none";
-	document.getElementById("gamePieceSizeHeader").style.display = "none";
-	document.getElementById("GamePieceSizeLabel").style.display = "none";
-	document.getElementById("decreaseGamePieceSizeButton").style.display = "none";
-	document.getElementById("increaseGamePieceSizeButton").style.display = "none";
+	document.getElementById("playerPieceSizeHeader").style.display = "none";
+	document.getElementById("PlayerPieceSizeLabel").style.display = "none";
+	document.getElementById("decreasePlayerPieceSizeButton").style.display = "none";
+	document.getElementById("increasePlayerPieceSizeButton").style.display = "none";
 	document.getElementById("autoHeader").style.display = "none";
 	document.getElementById("autoEnableLabel").style.display = "none";
 	document.getElementById("stopAutoButton").style.display = "none";
