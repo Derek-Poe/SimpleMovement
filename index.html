@@ -160,7 +160,7 @@ testActive = false;
 
 var GamePiece;
 var GamePiece2;
-var GamePiece3;
+var EnemyPiece1;
 var GamePiece4;
 
 var LargeMain;
@@ -514,7 +514,7 @@ function titleScreen(){
 //GamePiece and Enemy Projectile Creations
 
 GamePiece2 = new component(0, 0, "black", 0, 0);
-GamePiece3 = new component(0, 0, "black", 0, 0);
+EnemyPiece1 = new component(0, 0, "black", 0, 0);
 GamePiece4 = new component(0, 0, "black", 0, 0);
 LargeMain = new component(0, 0, "black", 0, 0);
 LargeMini1 = new component(0, 0, "black", 0, 0);
@@ -539,12 +539,12 @@ LargeMini16 = new component(0, 0, "black", 0, 0);
 
 function enemySpeedCalculation(){
 	
-	if(GamePiece3.x+(GamePiece3.width/2) < GamePiece.x+(GamePiece.width/2)){
+	if(EnemyPiece1.x+(EnemyPiece1.width/2) < GamePiece.x+(GamePiece.width/2)){
 
 		enemySpeedX = enemySpeed;
 
 	}
-	else if(GamePiece3.x+(GamePiece3.width/2) > GamePiece.x+(GamePiece.width/2)){
+	else if(EnemyPiece1.x+(EnemyPiece1.width/2) > GamePiece.x+(GamePiece.width/2)){
 
 		enemySpeedX = enemySpeed*-1;
 
@@ -555,12 +555,12 @@ function enemySpeedCalculation(){
 
 	}
 
-	if(GamePiece3.y+(GamePiece3.height/2) < GamePiece.y+(GamePiece.height/2)){
+	if(EnemyPiece1.y+(EnemyPiece1.height/2) < GamePiece.y+(GamePiece.height/2)){
 
 		enemySpeedY = enemySpeed;
 
 	}
-	else if(GamePiece3.y+(GamePiece3.height/2) > GamePiece.y+(GamePiece.height/2)){
+	else if(EnemyPiece1.y+(EnemyPiece1.height/2) > GamePiece.y+(GamePiece.height/2)){
 
 		enemySpeedY = enemySpeed*-1;
 
@@ -578,33 +578,33 @@ function enemySpeedCalculation(){
 
 function enemyAimCalculation (){
 	
-	if(GamePiece3.x >= GamePiece.x-20 && GamePiece3.x <= GamePiece.x+GamePiece.height+20){
+	if(EnemyPiece1.x >= GamePiece.x-20 && EnemyPiece1.x <= GamePiece.x+GamePiece.height+20){
 
 		aimPositionX = 0;
 
 	}
-	else if(GamePiece3.x < GamePiece.x){
+	else if(EnemyPiece1.x < GamePiece.x){
 		
 		aimPositionX = 1;
 
 	}
-	else if(GamePiece3.x > GamePiece.x){
+	else if(EnemyPiece1.x > GamePiece.x){
 
 		aimPositionX = -1;
 
 	}
 
-	if(GamePiece3.y >= GamePiece.y-20 && GamePiece3.y <= GamePiece.y+GamePiece.height+20){
+	if(EnemyPiece1.y >= GamePiece.y-20 && EnemyPiece1.y <= GamePiece.y+GamePiece.height+20){
 
 		aimPositionY = 0;
 
 	}
-	else if(GamePiece3.y < GamePiece.y){
+	else if(EnemyPiece1.y < GamePiece.y){
 
 		aimPositionY = 1;
 
 	}
-	else if(GamePiece3.y > GamePiece.y){
+	else if(EnemyPiece1.y > GamePiece.y){
 
 		aimPositionY = -1;
 
@@ -621,16 +621,16 @@ function enemyPosition(){
 
 		if(enemyPieceActive == true){
 
-			GamePiece3.x += enemySpeedX;
-			GamePiece3.y += enemySpeedY;
+			EnemyPiece1.x += enemySpeedX;
+			EnemyPiece1.y += enemySpeedY;
 
 		}
 
 		if(
-		GamePiece.x < GamePiece3.x + GamePiece3.width &&
-		GamePiece.x + GamePiece.width > GamePiece3.x &&
-		GamePiece.y < GamePiece3.y + GamePiece3.height &&
-		GamePiece.y + GamePiece.height > GamePiece3.y
+		GamePiece.x < EnemyPiece1.x + EnemyPiece1.width &&
+		GamePiece.x + GamePiece.width > EnemyPiece1.x &&
+		GamePiece.y < EnemyPiece1.y + EnemyPiece1.height &&
+		GamePiece.y + GamePiece.height > EnemyPiece1.y
 		) {
 
 			enemyTouch();	
@@ -942,7 +942,7 @@ function updateGameArea() {
 	GamePiece.newPos();
 	GamePiece.update();
 	GamePiece2.update();
-	GamePiece3.update();
+	EnemyPiece1.update();
 	GamePiece4.update();
 	enemyPosition();
 	enemyProjectilePosition();
@@ -1234,7 +1234,7 @@ function markBorderTouch() {
 				
 			GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 			GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
-			GamePiece3 = new component(0, 0, "black", 0, 0);
+			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
 				game1BGM.stop();
@@ -1274,7 +1274,7 @@ function enemyTouch(){
 
 		GamePiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GamePiece2 = new component(0, 0, "black", 0, 0, 0, 0);
-		GamePiece3 = new component(0, 0, "black", 0, 0);
+		EnemyPiece1 = new component(0, 0, "black", 0, 0);
 		GamePiece4 = new component(0, 0, "black", 0, 0);
 
 		game1BGM.stop();
@@ -1328,7 +1328,7 @@ function generateRandomX (){
 	}
 	else if(sideChoice == 1){
 
-		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.width - GamePiece3.width) - (GamePiece.x+GamePiece.width) ) + (GamePiece.x+GamePiece.width));
+		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.width - EnemyPiece1.width) - (GamePiece.x+GamePiece.width) ) + (GamePiece.x+GamePiece.width));
 
 		if(randomDecision < (GamePiece.x + GamePiece.width + 50)){
 			
@@ -1369,7 +1369,7 @@ function generateRandomY (){
 	}
 	else if(sideChoice == 1){
 
-		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.height - GamePiece3.height) - (GamePiece.y+GamePiece.height)) + (GamePiece.y+GamePiece.height));
+		randomDecision = Math.floor(Math.random() * ((GameArea.canvas.height - EnemyPiece1.height) - (GamePiece.y+GamePiece.height)) + (GamePiece.y+GamePiece.height));
 
 		if(randomDecision < (GamePiece.y + GamePiece.height + 50)){
 
@@ -1554,7 +1554,7 @@ function spawnEnemy (){
 		generateRandomX();
 		generateRandomY();
 
-		GamePiece3 = new component(20, 20, "orange", randomX, randomY);
+		EnemyPiece1 = new component(20, 20, "orange", randomX, randomY);
 		enemySpawnSound.play();
 
 	}
@@ -1573,7 +1573,7 @@ function enemyFire (){
 		firePositionX = aimPositionX*enemyProjectileSpeed;
 		firePositionY = aimPositionY*enemyProjectileSpeed;
 
-		GamePiece4 = new component(5, 5, "red", GamePiece3.x+(GamePiece3.width/2), GamePiece3.y+(GamePiece3.height/2));
+		GamePiece4 = new component(5, 5, "red", EnemyPiece1.x+(EnemyPiece1.width/2), EnemyPiece1.y+(EnemyPiece1.height/2));
 		pewSound.play();
 	
 	}
@@ -1598,7 +1598,7 @@ function largeMainLaunch (){
 	largeFirePositionX = aimPositionX*(enemyProjectileSpeed/3);
 	largeFirePositionY = aimPositionY*(enemyProjectileSpeed/3);
 
-	LargeMain = new component(10, 10, "pink", GamePiece3.x+(GamePiece3.width/2), GamePiece3.y+(GamePiece3.height/2));
+	LargeMain = new component(10, 10, "pink", EnemyPiece1.x+(EnemyPiece1.width/2), EnemyPiece1.y+(EnemyPiece1.height/2));
 	largeTraveling = setInterval(largeMainTravel, 50);
 	largeLaunchSound.play();
 
