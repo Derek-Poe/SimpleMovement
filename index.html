@@ -68,7 +68,7 @@ growthStarted = false;
 var playerPieceGrowing;
 
 enemySpeed = 0.5;
-enemy2Speed = 0.5;
+enemy2Speed = 0.55;
 enemyProjectileSpeed = 3.25;
 enemyFireRate = 4000;
 enemyFiring = false;
@@ -1534,13 +1534,13 @@ function startGame1(){
 
 	if(game1Score >= 5){
         	
-		spawnEnemy2();
+		spawnEnemy();
 
 	}
 
 	if(game1Score >= 10){
         	
-		spawnEnemy();
+		spawnEnemy2();
 
 	}
 	
@@ -1602,7 +1602,7 @@ function spawnEnemy2 (){
 		generateRandomX();
 		generateRandomY();
 
-		EnemyPiece2 = new component(20, 20, "#FFBF00", randomX, randomY);
+		EnemyPiece2 = new component(17.5, 17.5, "#9400F4", randomX, randomY);
 		enemy2SpawnSound.play();
 
 	}
