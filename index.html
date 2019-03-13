@@ -1534,13 +1534,13 @@ function startGame1(){
 
 	if(game1Score >= 5){
         	
-		spawnEnemy();
+		spawnEnemy2();
 
 	}
 
 	if(game1Score >= 10){
         	
-		spawnEnemy2();
+		spawnEnemy();
 
 	}
 	
@@ -1602,7 +1602,7 @@ function spawnEnemy2 (){
 		generateRandomX();
 		generateRandomY();
 
-		EnemyPiece2 = new component(20, 20, "pink", randomX, randomY);
+		EnemyPiece2 = new component(20, 20, "#FFBF00", randomX, randomY);
 		enemy2SpawnSound.play();
 
 	}
