@@ -92,7 +92,7 @@ game1Score = 0;
 game1HighScore = 0;
 addon1 = false;
 enemyPieceActive = false;
-enemy2PieceActive = false;
+enemyPiece2Active = false;
 
 gamePaused = false;
 testActive = false;
@@ -478,7 +478,7 @@ LargeMini16 = new component(0, 0, "black", 0, 0);
 
 
 //Move Enemys Toward Player/PointPiece
-//------------------------------------------------------------------------------------------------------------------
+
 function enemySpeedCalculation(){
 	
 	//if(enemyPieceActive == true){
@@ -517,7 +517,7 @@ function enemySpeedCalculation(){
 
 	//}
 	
-	//if(enemy2PieceActive == true){
+	//if(enemyPiece2Active == true){
 
 		if(EnemyPiece2.x+(EnemyPiece2.width/2) < PointPiece1.x+(PointPiece1.width/2)){
 
@@ -596,7 +596,7 @@ function enemyAimCalculation (){
 
 
 //Move Enemys
-//--------------------------------------------------------------------------------------------------------------------
+
 function enemyPosition(){
 
 	if(game1Loss == false){
@@ -608,7 +608,7 @@ function enemyPosition(){
 
 		}
 
-		if(enemy2PieceActive == true){
+		if(enemyPiece2Active == true){
 
 			EnemyPiece2.x += enemy2SpeedX;
 			EnemyPiece2.y += enemy2SpeedY;
@@ -1257,7 +1257,7 @@ function markBorderTouch() {
 			game1Loss = true;
 			titleScreenActive = true;
 			enemyPieceActive = false;
-			enemy2PieceActive = false;
+			enemyPiece2Active = false;
 
 			clearInterval(playerPieceGrowing);
 			growthStarted = false;
@@ -1302,7 +1302,7 @@ function enemyTouch(){
 		game1Loss = true;
 		titleScreenActive = true;
 		enemyPieceActive = false;
-		enemy2PieceActive = false;
+		enemyPiece2Active = false;
 
 		clearInterval(playerPieceGrowing);
 		growthStarted = false;
@@ -1589,15 +1589,15 @@ function spawnEnemy (){
 
 function spawnEnemy2 (){
 
-	if(enemy2PieceActive == false){
+	if(enemyPiece2Active == false){
 
-		enemy2PieceActive = true;
+		enemyPiece2Active = true;
 
 		generateRandomX();
 		generateRandomY();
 
 		EnemyPiece2 = new component(20, 20, "pink", randomX, randomY);
-		enemySpawnSound.play();
+		enemy2SpawnSound.play();
 
 	}
 
@@ -1610,6 +1610,7 @@ function enemyScore (){
 	if(game1Score > 0){
 
 		game1Score -= 1;
+		enemyScoreSound.play();
 
 	}
 
