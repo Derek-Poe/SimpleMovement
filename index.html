@@ -63,7 +63,7 @@ else{
 //Variable Declarations
 
 speed = 1;
-growthRate = 1.25;
+growthRate = 1.1;
 growthStarted = false;
 var playerPieceGrowing;
 
@@ -1471,7 +1471,7 @@ function startGame1(){
 	generateRandomX();
 	generateRandomY();
 	
-	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
+	PointPiece1 = new component(10, 10, "yellow", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
 	//PointPiece1 = new component(10, 10, "#33d6ff", randomX, randomY);
 
 	if(game1Active == true){
@@ -1586,7 +1586,7 @@ function spawnEnemy (){
 		generateRandomX();
 		generateRandomY();
 
-		EnemyPiece1 = new component(20, 20, "orange", randomX, randomY);
+		EnemyPiece1 = new component(20, 20, "#CC6C0C", randomX, randomY);
 		enemySpawnSound.play();
 
 	}
@@ -1620,7 +1620,7 @@ function enemyScore (){
 
 	}
 
-	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
+	PointPiece1 = new component(10, 10, "yellow", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
 
 }
 
