@@ -162,7 +162,7 @@ function startGame() {
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
 			if(titleScreenActive == true){	
-			
+		
 				titleScreenActive = false;
 				PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), 0, 0);
 				startGame1();
@@ -1057,9 +1057,9 @@ function fullScreen (){
 	GameArea.canvas.width = screen.width-6;
 	GameArea.canvas.height = screen.height-29.5;
 
-	GameArea.canvas.height += 25;
-	GameArea.canvas.width += 1;
-	GameArea.canvas.style = "width = 100%; height = 100%";
+	//GameArea.canvas.height += 25;
+	//GameArea.canvas.width += 1;
+	//GameArea.canvas.style = "width = 100%; height = 100%";
 
 	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
 	document.getElementById("canvas1").scrollIntoView();	
@@ -1434,7 +1434,7 @@ function growPlayerPiece(){
 //Game1 Super Function...
 
 function startGame1(){
-	
+fullScreen();	
 	if(game1Active == false){
 	
 		speed = 0;
