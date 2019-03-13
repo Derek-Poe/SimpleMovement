@@ -48,42 +48,6 @@ canvas {
 
 <body onload="startGame()">
 
-
-<div id="div1"> <br>
-
-<label id="speedHeader">Current Speed:</label>
-<p id="speedLabel">unknown</p>
-<button id="decreaseSpeedButton" onclick="decreaseSpeed()">Decrease Speed (1)</button>
-<button id="increaseSpeedButton" onclick="increaseSpeed()">Increase Speed (2)</button><br><br>
-<label id="positionHeader">Position:</label>
-<p id="positionLabel">unknown</p>
-<label id="areaSizeHeader">Current Area Size:</label>
-<p id="areaSizeLabel">unknown</p>
-<button id="decreaseAreaSizeButton" onclick="decreaseAreaSize()">Decrease Area Size (q)</button>
-<button id="fullScreenButton" onclick="fullScreen()">Full Screen</button>
-<button id="increaseAreaSizeButton" onclick="increaseAreaSize()">Increase Area Size (w)</button><br><br>
-<label id="playerPieceSizeHeader">Current Piece Size:</label>
-<p id="PlayerPieceSizeLabel">unknown</p>
-<button id="decreasePlayerPieceSizeButton" onclick="decreasePlayerPieceSize()">Decrease Piece Size (a)</button>
-<button id="increasePlayerPieceSizeButton" onclick="increasePlayerPieceSize()">Increase Piece Size (s)</button><br><br>
-<label id="autoHeader">Auto:</label>
-<p id="autoEnableLabel">Disabled</p>
-<button id="stopAutoButton" onclick="stopAuto()">Stop Auto (Esc)</button>
-<button id="startAutoButton" onclick="startAuto()">Start Auto (\)</button><br><br>
-<label id="accelerometerHeader">Accelerometer:</label>
-<p id="accelLabel">Disabled</p>
-<p id="accelerometer">Unknown</p>
-<button id="accelButton" onclick="accelToggle()">Start/Stop Accelerometer</button> <br><br><br><br>
-<button id="startGameButton" onclick="startGame1()">Start Game</button><br><br>
-<button id="spawnEnemyButton" onclick="spawnEnemy()">Spawn Enemy</button><br><br>
-<button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
-<button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
-<button id="splitMinisButton" onclick="launchMoreMinis()">Split Minis!</button>
-<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
-
-</div>
-
-
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
 <script type="text/javascript" src="js/my-app.js"></script>
@@ -91,6 +55,7 @@ canvas {
 <script type="text/javascript" src="plugins/sounds.js"></script>
 <script type="text/javascript" src="plugins/accelerometer.js"></script>
 <script type="text/javascript" src="plugins/screenlock.js"></script>
+<script type="text/javascript" src="plugins/debug.js"></script>
 
 <link href="pace.min.css" rel="stylesheet" />
 
@@ -196,7 +161,7 @@ rcolor = "";
 
 document.getElementById("speedLabel").innerHTML = speed;
 document.getElementById("positionLabel").innerHTML = position;
-document.getElementById("PlayerPieceSizeLabel").innerHTML = "30 x 30";
+document.getElementById("playerPieceSizeLabel").innerHTML = "30 x 30";
 
 
 //Start Basic Game Functions
@@ -208,6 +173,7 @@ function startGame() {
 		PlayerPiece = new component(30, 30, "white", 305, 165, 0, 0);
 		GameArea.start();
 		increaseAreaSize();
+		document.querySelector("#div1").style.visibility = "visible";
 	
 	}
 	else {
@@ -1062,7 +1028,7 @@ function increasePlayerPieceSize(){
 
 	PlayerPiece.width += 10;
 	PlayerPiece.height += 10;
-	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 }
 
@@ -1075,7 +1041,7 @@ function decreasePlayerPieceSize(){
 
 		PlayerPiece.width -= 10;
 		PlayerPiece.height -= 10;
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 	}
 
@@ -1402,7 +1368,7 @@ function growPlayerPiece(){
 
 	PlayerPiece.width += growthRate;
 	PlayerPiece.height += growthRate;
-	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 
 }
 
@@ -1471,7 +1437,7 @@ function startGame1(){
 		game1Loss = false;
 		game1Score = 0;
 		PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), PlayerPiece.speedX, PlayerPiece.speedY);
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		game1BGM.play();
@@ -1484,7 +1450,7 @@ function startGame1(){
 		document.getElementById("speedLabel").innerHTML = speed;
 		PlayerPiece.width -= 2.5;
 		PlayerPiece.height -= 2.5;
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
 		
 		if(game1Score <= 98){
 
@@ -1884,47 +1850,6 @@ document.addEventListener('keydown', function(event) {
 	}
 
 });
-
-
-//Hide All Debug Information
-
-if(debug == false) {
-
-	//document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
-
-	document.getElementById("div1").style.display = "none";	
-
-	/*document.getElementById("speedHeader").style.display = "none";
-	document.getElementById("speedLabel").style.display = "none";
-	document.getElementById("decreaseSpeedButton").style.display = "none";
-	document.getElementById("increaseSpeedButton").style.display = "none";
-	document.getElementById("positionHeader").style.display = "none";
-	document.getElementById("positionLabel").style.display = "none";
-	document.getElementById("areaSizeHeader").style.display = "none";
-	document.getElementById("areaSizeLabel").style.display = "none";
-	document.getElementById("decreaseAreaSizeButton").style.display = "none";
-	document.getElementById("fullScreenButton").style.display = "none";
-	document.getElementById("increaseAreaSizeButton").style.display = "none";
-	document.getElementById("playerPieceSizeHeader").style.display = "none";
-	document.getElementById("PlayerPieceSizeLabel").style.display = "none";
-	document.getElementById("decreasePlayerPieceSizeButton").style.display = "none";
-	document.getElementById("increasePlayerPieceSizeButton").style.display = "none";
-	document.getElementById("autoHeader").style.display = "none";
-	document.getElementById("autoEnableLabel").style.display = "none";
-	document.getElementById("stopAutoButton").style.display = "none";
-	document.getElementById("startAutoButton").style.display = "none";
-	document.getElementById("accelerometerHeader").style.display = "none";
-	document.getElementById("accelLabel").style.display = "none";
-	document.getElementById("accelerometer").style.display = "none";
-	document.getElementById("accelButton").style.display = "none";
-	document.getElementById("startGameButton").style.display = "none";
-	document.getElementById("spawnEnemyButton").style.display = "none";
-	document.getElementById("enemyFireButton").style.display = "none";
-	document.getElementById("enemyFireLargeButton").style.display = "none";
-	document.getElementById("splitMinisButton").style.display = "none";*/
-
-}
-
 
 </script>
 
