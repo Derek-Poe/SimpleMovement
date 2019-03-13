@@ -25,8 +25,8 @@
 <script type="text/javascript" src="js/my-app.js"></script>
 <script type="text/javascript" src="plugins/sounds.js"></script>
 <script type="text/javascript" src="plugins/accelerometer.js"></script>
-<script type="text/javascript" src="plugins/screenlock.js"></script>
 <script type="text/javascript" src="plugins/debug.js"></script>
+<script type="text/javascript" src="plugins/screenlock.js"></script>
 
 <link rel="stylesheet" href="styles/index.css" />
 
@@ -68,6 +68,7 @@ growthStarted = false;
 var playerPieceGrowing;
 
 enemySpeed = 0.5;
+enemy2Speed = 0.5;
 enemyProjectileSpeed = 3.25;
 enemyFireRate = 4000;
 enemyFiring = false;
@@ -78,6 +79,8 @@ var randomX;
 var randomY;
 var enemySpeedX;
 var enemySpeedY;
+var enemy2SpeedX;
+var enemy2SpeedY;
 var aimPositionX;
 var aimPositionY;
 var firePositionX;
@@ -89,6 +92,7 @@ game1Score = 0;
 game1HighScore = 0;
 addon1 = false;
 enemyPieceActive = false;
+enemy2PieceActive = false;
 
 gamePaused = false;
 testActive = false;
@@ -96,6 +100,7 @@ testActive = false;
 var PlayerPiece;
 var PointPiece1;
 var EnemyPiece1;
+var EnemyPiece2;
 var EnemyProjectile1;
 
 var LargeMain;
@@ -451,6 +456,7 @@ function titleScreen(){
 
 PointPiece1 = new component(0, 0, "black", 0, 0);
 EnemyPiece1 = new component(0, 0, "black", 0, 0);
+EnemyPiece2 = new component(0, 0, "black", 0, 0);
 EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 LargeMain = new component(0, 0, "black", 0, 0);
 LargeMini1 = new component(0, 0, "black", 0, 0);
@@ -471,41 +477,81 @@ LargeMini15 = new component(0, 0, "black", 0, 0);
 LargeMini16 = new component(0, 0, "black", 0, 0);
 
 
-//Move Enemy Toward Player
-
+//Move Enemys Toward Player/PointPiece
+//------------------------------------------------------------------------------------------------------------------
 function enemySpeedCalculation(){
 	
-	if(EnemyPiece1.x+(EnemyPiece1.width/2) < PlayerPiece.x+(PlayerPiece.width/2)){
+	//if(enemyPieceActive == true){
 
-		enemySpeedX = enemySpeed;
+		if(EnemyPiece1.x+(EnemyPiece1.width/2) < PlayerPiece.x+(PlayerPiece.width/2)){
 
-	}
-	else if(EnemyPiece1.x+(EnemyPiece1.width/2) > PlayerPiece.x+(PlayerPiece.width/2)){
+			enemySpeedX = enemySpeed;
 
-		enemySpeedX = enemySpeed*-1;
+		}
+		else if(EnemyPiece1.x+(EnemyPiece1.width/2) > PlayerPiece.x+(PlayerPiece.width/2)){
 
-	}
-	else {
+			enemySpeedX = enemySpeed*-1;
 
-		enemySpeedX = 0;
+		}
+		else {
 
-	}
+			enemySpeedX = 0;
 
-	if(EnemyPiece1.y+(EnemyPiece1.height/2) < PlayerPiece.y+(PlayerPiece.height/2)){
+		}
 
-		enemySpeedY = enemySpeed;
+		if(EnemyPiece1.y+(EnemyPiece1.height/2) < PlayerPiece.y+(PlayerPiece.height/2)){
 
-	}
-	else if(EnemyPiece1.y+(EnemyPiece1.height/2) > PlayerPiece.y+(PlayerPiece.height/2)){
+			enemySpeedY = enemySpeed;
 
-		enemySpeedY = enemySpeed*-1;
+		}
+		else if(EnemyPiece1.y+(EnemyPiece1.height/2) > PlayerPiece.y+(PlayerPiece.height/2)){
 
-	}
-	else {
+			enemySpeedY = enemySpeed*-1;
 
-		enemySpeedY = 0;
+		}
+		else {
 
-	}
+			enemySpeedY = 0;
+
+		}
+
+	//}
+	
+	//if(enemy2PieceActive == true){
+
+		if(EnemyPiece2.x+(EnemyPiece2.width/2) < PointPiece1.x+(PointPiece1.width/2)){
+
+			enemy2SpeedX = enemy2Speed;
+
+		}
+		else if(EnemyPiece2.x+(EnemyPiece2.width/2) > PointPiece1.x+(PointPiece1.width/2)){
+
+			enemy2SpeedX = enemy2Speed*-1;
+
+		}
+		else {
+
+			enemy2SpeedX = 0;
+
+		}
+
+		if(EnemyPiece2.y+(EnemyPiece2.height/2) < PointPiece1.y+(PointPiece1.height/2)){
+
+			enemy2SpeedY = enemy2Speed;
+
+		}
+		else if(EnemyPiece2.y+(EnemyPiece2.height/2) > PointPiece1.y+(PointPiece1.height/2)){
+
+			enemy2SpeedY = enemy2Speed*-1;
+
+		}
+		else {
+
+			enemy2SpeedY = 0;
+
+		}
+
+	//}
 
 }
 
@@ -549,8 +595,8 @@ function enemyAimCalculation (){
 }
 
 
-//Move Enemy
-
+//Move Enemys
+//--------------------------------------------------------------------------------------------------------------------
 function enemyPosition(){
 
 	if(game1Loss == false){
@@ -562,6 +608,13 @@ function enemyPosition(){
 
 		}
 
+		if(enemy2PieceActive == true){
+
+			EnemyPiece2.x += enemy2SpeedX;
+			EnemyPiece2.y += enemy2SpeedY;
+
+		}
+
 		if(
 		PlayerPiece.x < EnemyPiece1.x + EnemyPiece1.width &&
 		PlayerPiece.x + PlayerPiece.width > EnemyPiece1.x &&
@@ -570,6 +623,28 @@ function enemyPosition(){
 		) {
 
 			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < EnemyPiece2.x + EnemyPiece2.width &&
+		PlayerPiece.x + PlayerPiece.width > EnemyPiece2.x &&
+		PlayerPiece.y < EnemyPiece2.y + EnemyPiece2.height &&
+		PlayerPiece.y + PlayerPiece.height > EnemyPiece2.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PointPiece1.x < EnemyPiece2.x + EnemyPiece2.width &&
+		PointPiece1.x + PointPiece1.width > EnemyPiece2.x &&
+		PointPiece1.y < EnemyPiece2.y + EnemyPiece2.height &&
+		PointPiece1.y + PointPiece1.height > EnemyPiece2.y
+		) {
+
+			enemyScore();	
 
 		}
 
@@ -879,6 +954,7 @@ function updateGameArea() {
 	PlayerPiece.update();
 	PointPiece1.update();
 	EnemyPiece1.update();
+	EnemyPiece2.update();
 	EnemyProjectile1.update();
 	enemyPosition();
 	enemyProjectilePosition();
@@ -1171,6 +1247,7 @@ function markBorderTouch() {
 			PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 			PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
+			EnemyPiece2 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
 				game1BGM.stop();
@@ -1180,6 +1257,7 @@ function markBorderTouch() {
 			game1Loss = true;
 			titleScreenActive = true;
 			enemyPieceActive = false;
+			enemy2PieceActive = false;
 
 			clearInterval(playerPieceGrowing);
 			growthStarted = false;
@@ -1190,7 +1268,11 @@ function markBorderTouch() {
 			clearInterval(activelyFiringLarge);
 			enemyFiringLarge = false;
 
-			clearInterval(largeTraveling);
+			if(largeTraveling != false){
+
+				clearInterval(largeTraveling);
+		
+			}
 			LargeMain = new component(0, 0, "black", 0, 0);
 
 			stopMinis();
@@ -1211,6 +1293,7 @@ function enemyTouch(){
 		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
+		EnemyPiece2 = new component(0, 0, "black", 0, 0);
 		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 
 		game1BGM.stop();
@@ -1219,6 +1302,7 @@ function enemyTouch(){
 		game1Loss = true;
 		titleScreenActive = true;
 		enemyPieceActive = false;
+		enemy2PieceActive = false;
 
 		clearInterval(playerPieceGrowing);
 		growthStarted = false;
@@ -1229,7 +1313,11 @@ function enemyTouch(){
 		clearInterval(activelyFiringLarge);
 		enemyFiringLarge = false;
 
-		clearInterval(largeTraveling);
+		if(largeTraveling != false){
+
+			clearInterval(largeTraveling);
+		
+		}
 		LargeMain = new component(0, 0, "black", 0, 0);
 
 		stopMinis();
@@ -1481,11 +1569,13 @@ function startGame1(){
 }
 
 
-//Spawn Enemy
+//Spawn Enemys
 
 function spawnEnemy (){
 
 	if(enemyPieceActive == false){
+
+		enemyPieceActive = true;
 
 		generateRandomX();
 		generateRandomY();
@@ -1495,10 +1585,37 @@ function spawnEnemy (){
 
 	}
 
-	enemyPieceActive = true;
+}
+
+function spawnEnemy2 (){
+
+	if(enemy2PieceActive == false){
+
+		enemy2PieceActive = true;
+
+		generateRandomX();
+		generateRandomY();
+
+		EnemyPiece2 = new component(20, 20, "pink", randomX, randomY);
+		enemySpawnSound.play();
+
+	}
 
 }
 
+//Subtract Point and Move PointPiece
+
+function enemyScore (){
+
+	if(game1Score > 0){
+
+		game1Score -= 1;
+
+	}
+
+	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
+
+}
 
 //Fire Enemy Projectile
 
