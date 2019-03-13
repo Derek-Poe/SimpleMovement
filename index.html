@@ -17,6 +17,8 @@
 
 <body onload="startGame()">
 
+<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
+
 <script type="text/javascript" src="plugins/progress.js"></script>
 <link rel="stylesheet" href="styles/progressjs.css" />
 
@@ -31,6 +33,29 @@
 <link rel="stylesheet" href="styles/index.css" />
 
 <script type="text/javascript" charset="utf-8">
+
+//document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
+/*function touchMove (event e) {
+    e.preventDefault;
+}*/
+/*document.querySelector("body").on('touchmove', function(evt) {
+    evt.preventDefault(); 
+})*/
+/*$(document).ready(function() {
+    document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
+});*/
+//document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
+/*webView.setOnTouchListener(new View.OnTouchListener() {
+
+    public boolean onTouch(View v, MotionEvent event) {
+      return (event.getAction() == MotionEvent.ACTION_MOVE);
+    }
+});*/
+document.body.addEventListener('touchmove', function(e) {
+    // Cancel the event
+    e.preventDefault();
+}, false);
+
 
 //Debug Mode Start
 
@@ -1052,7 +1077,6 @@ function decreaseAreaSize(){
 
 function fullScreen (){
 
-	document.documentElement.style.overflow = "hidden";
 
 	GameArea.canvas.width = screen.width-6;
 	GameArea.canvas.height = screen.height-29.5;
@@ -1065,6 +1089,10 @@ function fullScreen (){
 	document.getElementById("canvas1").scrollIntoView();	
 	window.scrollBy(screen.width, 0);
 
+	//document.documentElement.style.overflow = "hidden";
+	//document.body.style.overflow = "hidden";
+	//document.querySelector("#canvas1").style.overflow = "hidden";
+	
 }
 
 
