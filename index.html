@@ -88,7 +88,7 @@ else{
 //Variable Declarations
 
 speed = 1;
-growthRate = 1.1;
+growthRate = 0.05;
 growthStarted = false;
 var playerPieceGrowing;
 
@@ -149,6 +149,8 @@ var LargeMini16;
 largeMiniSize = 3;
 minisLaunched = false;
 moreMinisLaunched = false;
+
+gameAreaClearDisabled = false;
 
 gameAreaSizeFactor = 1;
 position = "(0, 0)";
@@ -219,7 +221,11 @@ var GameArea = {
 
 		clear : function() {
 
-			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			if(gameAreaClearDisabled == false){
+
+				this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			}
 
 		}
 
@@ -1045,6 +1051,8 @@ function resetSpeed (){
 
 function increaseAreaSize(){
 
+	document.documentElement.style.overflow = "hidden";
+
 	gameAreaSizeFactor += 0.25;
 	GameArea.canvas.width = (gameAreaSizeFactor * 20)*16;
 	GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
@@ -1462,7 +1470,9 @@ function growPlayerPiece(){
 //Game1 Super Function...
 
 function startGame1(){
+
 fullScreen();	
+
 	if(game1Active == false){
 	
 		speed = 0;
@@ -1489,7 +1499,7 @@ fullScreen();
 	
 		PlayerPiece.width += 2.5;
 		PlayerPiece.height += 2.5;
-		playerPieceGrowing = setInterval(growPlayerPiece, 1000);
+		playerPieceGrowing = setInterval(growPlayerPiece, 50);
 		growthStarted = true;
 
 	}
