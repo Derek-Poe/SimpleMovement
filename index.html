@@ -11,25 +11,24 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 
- <script type="text/javascript">
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+<script type="text/javascript" src="js/my-app.js"></script>
+<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
             window.addEventListener('load', function() {
-                document.body.addEventListener('touchmove', function(e) {
+                document.addEventListener('touchmove', function(e) {
                     e.preventDefault();
                 }, false);
             }, false);
         </script>
-
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-<script type="text/javascript" src="js/my-app.js"></script>
 
 <title>Simple Movement</title>
 
 </head>
 
 <body onload="startGame()">
-
-<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript" src="plugins/progress.js"></script>
 <link rel="stylesheet" href="styles/progressjs.css" />
@@ -294,7 +293,9 @@ function component(width, height, color, x, y, speedX, speedY) {
 		this.x += this.speedX;
 		this.y += this.speedY;
 		position = "("+Math.round(PlayerPiece.x)+", "+Math.round(PlayerPiece.y)+")";
+		if(debug == true){
 		document.getElementById("positionLabel").innerHTML = position;
+		}
 		
 		//Move PlayerPiece with Accelerometer		
 
@@ -1104,7 +1105,9 @@ function decreaseAreaSize(){
 		GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
+		if(debug == true){
 		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+		}
 	
 	}
 
