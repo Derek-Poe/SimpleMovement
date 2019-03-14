@@ -1327,6 +1327,12 @@ function markBorderTouch() {
 			titleScreenActive = true;
 			enemyPieceActive = false;
 			enemyPiece2Active = false;
+			
+			if(game1Score >= game1HighScore){
+
+				game1HighScore = game1Score; 
+
+			}
 
 			clearInterval(playerPieceGrowing);
 			growthStarted = false;
@@ -1372,6 +1378,12 @@ function enemyTouch(){
 		titleScreenActive = true;
 		enemyPieceActive = false;
 		enemyPiece2Active = false;
+		
+		if(game1Score >= game1HighScore){
+
+			game1HighScore = game1Score; 
+
+		}
 
 		clearInterval(playerPieceGrowing);
 		growthStarted = false;
@@ -1586,12 +1598,6 @@ fullScreen();
 		if(game1Score <= 98){
 
 			game1Score += 1;
-
-		}
-
-		if(game1Score >= game1HighScore){
-
-			game1HighScore = game1Score; 
 
 		}
 		
