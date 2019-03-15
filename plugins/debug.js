@@ -1,6 +1,6 @@
 let div = document.createElement("div");
 div.id = "div1";
-div.style = "text-align: center; line-height: 0.5; width: 480px; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; visibility: hidden";
+div.style = "text-align: center; line-height: 0.5; width: inherit; overflow: hidden; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; visibility: hidden";
 document.body.appendChild(div);
 
 let break1 = document.createElement("br");
@@ -18,13 +18,13 @@ document.querySelector("#div1").appendChild(item2);
 
 let item3 = document.createElement("button");
 item3.id = "decreaseSpeedButton";
-item3.onclick = "decreaseSpeed()";
+//item3.onclick = "decreaseSpeed()";
 item3.innerHTML = "Decrease Speed (1)"; 
 document.querySelector("#div1").appendChild(item3);
 
 let item4 = document.createElement("button");
 item4.id = "increaseSpeedButton";
-item4.onclick = "increaseSpeed()";
+//item4.onclick = increaseSpeed();
 item4.innerHTML = "Increase Speed (2)"; 
 document.querySelector("#div1").appendChild(item4);
 
@@ -56,19 +56,19 @@ document.querySelector("#div1").appendChild(item8);
 
 let item9 = document.createElement("button");
 item9.id = "decreaseAreaSizeButton";
-item9.onclick = "decreaseAreaSize()";
+//item9.onclick = "decreaseAreaSize()";
 item9.innerHTML = "Decrease Area Size (q)"; 
 document.querySelector("#div1").appendChild(item9);
 
 let item10 = document.createElement("button");
 item10.id = "fullScreenButton";
-item10.onclick = "fullScreen()";
+//item10.onclick = "fullScreen()";
 item10.innerHTML = "Full Screen"; 
 document.querySelector("#div1").appendChild(item10);
 
 let item11 = document.createElement("button");
 item11.id = "increaseAreaSizeButton";
-item11.onclick = "increaseAreaSize()";
+//item11.onclick = "increaseAreaSize()";
 item11.innerHTML = "Increase Area Size (w)"; 
 document.querySelector("#div1").appendChild(item11);
 
@@ -90,13 +90,13 @@ document.querySelector("#div1").appendChild(item13);
 
 let item14 = document.createElement("button");
 item14.id = "decreasePlayerPieceSizeButton";
-item14.onclick = "decreasePlayerPieceSize()";
+//item14.onclick = "decreasePlayerPieceSize()";
 item14.innerHTML = "Decrease Piece Size (a)"; 
 document.querySelector("#div1").appendChild(item14);
 
 let item15 = document.createElement("button");
 item15.id = "increasePlayerPieceSizeButton";
-item15.onclick = "increasePlayerPieceSize()";
+//item15.onclick = "increasePlayerPieceSize()";
 item15.innerHTML = "Increase Piece Size (s)"; 
 document.querySelector("#div1").appendChild(item15);
 
@@ -118,13 +118,13 @@ document.querySelector("#div1").appendChild(item17);
 
 let item18 = document.createElement("button");
 item18.id = "stopAutoButton";
-item18.onclick = "stopAuto()";
+//item18.onclick = "stopAuto()";
 item18.innerHTML = "Stop Auto (Esc)"; 
 document.querySelector("#div1").appendChild(item18);
 
 let item19 = document.createElement("button");
 item19.id = "startAutoButton";
-item19.onclick = "startAuto()";
+//item19.onclick = "startAuto()";
 item19.innerHTML = "Start Auto (\)"; 
 document.querySelector("#div1").appendChild(item19);
 
@@ -151,7 +151,7 @@ document.querySelector("#div1").appendChild(item22);
 
 let item23 = document.createElement("button");
 item23.id = "accelButton";
-item23.onclick = "accelToggle()";
+//item23.onclick = "accelToggle()";
 item23.innerHTML = "Start/Stop Accelerometer"; 
 document.querySelector("#div1").appendChild(item23);
 
@@ -169,7 +169,7 @@ document.querySelector("#div1").appendChild(break13);
 
 let item24 = document.createElement("button");
 item24.id = "startGameButton";
-item24.onclick = "startGame1()";
+//item24.onclick = "startGame1()";
 item24.innerHTML = "Start Game"; 
 document.querySelector("#div1").appendChild(item24);
 
@@ -181,7 +181,7 @@ document.querySelector("#div1").appendChild(break15);
 
 let item25 = document.createElement("button");
 item25.id = "spawnEnemyButton";
-item25.onclick = "spawnEnemy()";
+//item25.onclick = "spawnEnemy()";
 item25.innerHTML = "Spawn Enemy"; 
 document.querySelector("#div1").appendChild(item25);
 
@@ -193,24 +193,49 @@ document.querySelector("#div1").appendChild(break17);
 
 let item26 = document.createElement("button");
 item26.id = "enemyFireButton";
-item26.onclick = "enemyFire()";
+//item26.onclick = "enemyFire()";
 item26.innerHTML = "Fire!"; 
 document.querySelector("#div1").appendChild(item26);
 
 let item27 = document.createElement("button");
 item27.id = "enemyFireLargeButton";
-item27.onclick = "enemyFireLarge()";
+//item27.onclick = "enemyFireLarge()";
 item27.innerHTML = "Fire Large!"; 
 document.querySelector("#div1").appendChild(item27);
 
 let item28 = document.createElement("button");
 item28.id = "splitMinisButton";
-item28.onclick = "launchMoreMinis()";
+//item28.onclick = "launchMoreMinis()";
 item28.innerHTML = "Split Minis!"; 
 document.querySelector("#div1").appendChild(item28);
 
 let item29 = document.createElement("button");
 item29.id = "lsButton";
-item29.onclick = "lockStart()";
+////item29.onclick = "lockStart()";
 item29.hidden = "hidden"; 
 document.querySelector("#div1").appendChild(item29);
+
+/*let overlay = document.createElement("div");
+overlay.id = "overlay";
+overlay.style = "position: fixed; display: block; width: 100%; height: 100%; top: 0;  left: 0; right: 0; bottom: 0; background-color: rgba(0,0,0,0.5); z-index: 2";
+document.documentElement.appendChild(overlay);*/
+
+function assignDebugButtons(){
+	
+	document.querySelector("#decreaseSpeedButton").onclick = decreaseSpeed();
+	document.querySelector("#increaseSpeedButton").onclick = increaseSpeed();
+	document.querySelector("#decreaseAreaSizeButton").onclick = decreaseAreaSize();
+	document.querySelector("#fullScreenButton").onclick = fullScreen();
+	document.querySelector("#increaseAreaSizeButton").onclick = increaseAreaSize();
+	document.querySelector("#decreasePlayerPieceSizeButton").onclick = decreasePlayerPieceSize();
+	document.querySelector("#increasePlayerPieceSizeButton").onclick = increasePlayerPieceSize();
+	document.querySelector("#stopAutoButton").onclick = stopAuto();
+	document.querySelector("#startAutoButton").onclick = startAuto();
+	document.querySelector("#accelButton").onclick = accelToggle();
+	document.querySelector("#startGameButton").onclick = startGame1();
+	document.querySelector("#spawnEnemyButton").onclick = spawnEnemy();
+	document.querySelector("#enemyFireButton").onclick = enemyFire();
+	document.querySelector("#enemyFireLargeButton").onclick = enemyFireLarge();
+	document.querySelector("#splitMinisButton").onclick = launchMoreMinis();
+	
+}
