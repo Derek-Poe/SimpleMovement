@@ -1,3 +1,13 @@
+body {
+
+	width: 100vw;
+	height: 100vh;
+	scrollWidth: 100vw;
+	scrollHeight: 100vh;
+	overflow: hidden;
+
+}
+
 #canvas1 {
 
 	border:3px solid #FFA500;
