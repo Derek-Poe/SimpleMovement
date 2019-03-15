@@ -915,7 +915,7 @@ function enemyProjectilePosition(){
 function clearEnemies(){
 
 	if(enemyPieceActive == false){
-	
+
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
 		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 	
@@ -967,7 +967,6 @@ function clearEnemies(){
 
 }
 
-setInterval(clearEnemies, 250);
 
 //Update on Canvas
 function updateGameArea() {
@@ -1002,6 +1001,7 @@ function updateGameArea() {
 	LargeMini14.update();
 	LargeMini15.update();
 	LargeMini16.update();
+	clearEnemies();
 
 }
 
