@@ -1272,7 +1272,7 @@ function pauseGame() {
 //End Game on Wall Collision
 
 function markBorderTouch() {
-alert("BorderTouchLoss");
+
 	if(game1Active == true) {
 
 		if(game1Loss == false){
@@ -1282,7 +1282,7 @@ alert("BorderTouchLoss");
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 			EnemyPiece2 = new component(0, 0, "black", 0, 0);
 			EnemyProjectile1 = new component(0, 0, "black", 0, 0);
-
+alert("BorderTouchLoss");
 			if(game1Loss == false){
 				game1BGM.stop();
 				lossSound.play();
