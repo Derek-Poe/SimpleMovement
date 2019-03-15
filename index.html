@@ -11,62 +11,25 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
-<script type="text/javascript" src="js/my-app.js"></script>
-<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
-
-<script type="text/javascript">
-            window.addEventListener('load', function() {
-                document.addEventListener('touchmove', function(e) {
-                    e.preventDefault();
-                }, false);
-            }, false);
-        </script>
-
 <title>Simple Movement</title>
 
 </head>
 
 <body onload="startGame()">
 
-<script type="text/javascript" src="plugins/progress.js"></script>
-<link rel="stylesheet" href="styles/progressjs.css" />
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
+<script type="text/javascript" src="js/my-app.js"></script>
+<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
 
 <script type="text/javascript" src="plugins/sounds.js"></script>
 <script type="text/javascript" src="plugins/accelerometer.js"></script>
 <script type="text/javascript" src="plugins/debug.js"></script>
 <script type="text/javascript" src="plugins/screenlock.js"></script>
-<script type="text/javascript" src="plugins/bodyscrolllock.js"></script>
 
 <link rel="stylesheet" href="styles/index.css" />
 
 <script type="text/javascript" charset="utf-8">
-
-
-
-
-//document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
-/*function touchMove (event e) {
-    e.preventDefault;
-}*/
-/*document.querySelector("body").on('touchmove', function(evt) {
-    evt.preventDefault(); 
-})*/
-/*$(document).ready(function() {
-    document.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
-});*/
-//document.body.addEventListener('touchmove', function(e) { e.preventDefault(); }, false);
-/*webView.setOnTouchListener(new View.OnTouchListener() {
-
-    public boolean onTouch(View v, MotionEvent event) {
-      return (event.getAction() == MotionEvent.ACTION_MOVE);
-    }
-});*/
-document.body.addEventListener('touchmove', function(e) {
-    // Cancel the event
-    e.preventDefault();
-}, false);
 
 
 //Debug Mode Start
@@ -142,6 +105,7 @@ var EnemyProjectile1;
 
 var LargeMain;
 largeMainLaunched = false;
+largeTraveling = false;
 var LargeMini1;
 var LargeMini2;
 var LargeMini3;
@@ -196,24 +160,8 @@ function startGame() {
 	
 		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
+		document.body.removeChild(document.querySelector("#div1"));
 		fullScreen();
-		
-		//------------------------------------
-		// 1. Get a target element that you want to persist scrolling for (such as a modal/lightbox/flyout/nav). 
-		const targetElement = document.querySelector("body");
-		const targetElement2 = document.querySelector("html");
- 
-		// 2. ...in some event handler after showing the target element...disable body scroll
-		bodyScrollLock.disableBodyScroll(targetElement);
-		bodyScrollLock.disableBodyScroll(targetElement2);
- 
-		// 3. ...in some event handler after hiding the target element...
-		//bodyScrollLock.enableBodyScroll(targetElement);
- 
-		// 4. Useful if we have called disableBodyScroll for multiple target elements,
-		// and we just want a kill-switch to undo all that.
-		//bodyScrollLock.clearAllBodyScrollLocks();
-		//------------------------------------
 		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
@@ -1049,7 +997,9 @@ function updateGameArea() {
 function increaseSpeed(){
 
 	speed += 1;
-	document.getElementById("speedLabel").innerHTML = speed;
+	if(debug == true){
+		document.getElementById("speedLabel").innerHTML = speed;
+	}
 
 }
 
@@ -1061,7 +1011,9 @@ function decreaseSpeed(){
 	if(speed > 0){
 
 		speed -= 1;
-		document.getElementById("speedLabel").innerHTML = speed;
+		if(debug == true){
+			document.getElementById("speedLabel").innerHTML = speed;
+		}
 
 	}
 
@@ -1073,7 +1025,9 @@ function decreaseSpeed(){
 function resetSpeed (){
 
 	speed = 1;
-	document.getElementById("speedLabel").innerHTML = speed;
+	if(debug == true){
+		document.getElementById("speedLabel").innerHTML = speed;
+	}
 
 }
 
@@ -1089,7 +1043,9 @@ function increaseAreaSize(){
 	GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
 	PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 	PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
-	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	if(debug == true){
+		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	}
 
 }
 
@@ -1106,7 +1062,7 @@ function decreaseAreaSize(){
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		if(debug == true){
-		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+			document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
 		}
 	
 	}
@@ -1117,18 +1073,22 @@ function decreaseAreaSize(){
 //Fit Cavas Size to Mobile Device Screen
 
 function fullScreen (){
+	
+	GameArea.canvas.width = document.querySelector("body").scrollWidth-6;
+	GameArea.canvas.height = document.querySelector("body").scrollHeight-6;
 
-
-	GameArea.canvas.width = screen.width-6;
-	GameArea.canvas.height = screen.height-29.5;
+	//GameArea.canvas.width = screen.width-6;
+	//GameArea.canvas.height = screen.height-29.5;
 
 	//GameArea.canvas.height += 25;
 	//GameArea.canvas.width += 1;
 	//GameArea.canvas.style = "width = 100%; height = 100%";
-
-	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
-	document.getElementById("canvas1").scrollIntoView();	
-	window.scrollBy(screen.width, 0);
+	
+  	if(debug == true){
+		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+    	}
+    	//document.getElementById("canvas1").scrollIntoView();	
+	//window.scrollBy(screen.width, 0);
 
 	//document.documentElement.style.overflow = "hidden";
 	//document.body.style.overflow = "hidden";
@@ -1143,7 +1103,9 @@ function increasePlayerPieceSize(){
 
 	PlayerPiece.width += 10;
 	PlayerPiece.height += 10;
-	document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	if(debug == true){
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	}
 
 }
 
@@ -1156,7 +1118,9 @@ function decreasePlayerPieceSize(){
 
 		PlayerPiece.width -= 10;
 		PlayerPiece.height -= 10;
-		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		if(debug == true){
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}
 
 	}
 
@@ -1508,7 +1472,9 @@ function growPlayerPiece(){
 
 	PlayerPiece.width += growthRate;
 	PlayerPiece.height += growthRate;
-	document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	if(debug == true){
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	}
 
 }
 
@@ -1581,7 +1547,9 @@ fullScreen();
 		game1Loss = false;
 		game1Score = 0;
 		PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), PlayerPiece.speedX, PlayerPiece.speedY);
-		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		if(debug == true){
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		game1BGM.play();
@@ -1591,11 +1559,13 @@ fullScreen();
 	else {
 
 		speed += 0.125;
-		document.getElementById("speedLabel").innerHTML = speed;
 		PlayerPiece.width -= 2.5;
 		PlayerPiece.height -= 2.5;
-		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
-		
+		if(debug == true){
+			document.getElementById("speedLabel").innerHTML = speed;
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}		
+
 		if(game1Score <= 98){
 
 			game1Score += 1;
