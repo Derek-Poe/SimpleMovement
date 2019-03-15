@@ -39,3 +39,5 @@ pewSound = new sound("sounds/Pew.mp3");
 largeLaunchSound = new sound("sounds/LaunchLarge.mp3");
 largeDetonateSound = new sound("sounds/BigPew.mp3");
 miniSplitSound = new sound("sounds/MiniSplit.mp3");
+enemy2SpawnSound = new sound("sounds/Enemy2Spawn.mp3");
+enemyScoreSound = new sound("sounds/EnemyScore.mp3");

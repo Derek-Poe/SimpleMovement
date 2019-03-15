@@ -11,88 +11,23 @@
 <meta name="format-detection" content="telephone=no">
 <meta name="msapplication-tap-highlight" content="no">
 
-
 <title>Simple Movement</title>
-
-
-<style>
-
-canvas {
-
-	border:3px solid #FFA500;
-	background-color: #000000;
-	padding-left: 0;
-	padding-right: 0;
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
-
-}
-
-#div1 {
-
-	text-align:center;
-	line-height: 0.5;
-	width:480px;
-	margin-left: auto;
-	margin-right: auto;
-	padding-left: 0;
-	padding-right: 0;
-
-}
-
-</style>
-
 
 </head>
 
 <body onload="startGame()">
 
-
-<div id="div1"> <br>
-
-<label id="speedHeader">Current Speed:</label>
-<p id="speedLabel">unknown</p>
-<button id="decreaseSpeedButton" onclick="decreaseSpeed()">Decrease Speed (1)</button>
-<button id="increaseSpeedButton" onclick="increaseSpeed()">Increase Speed (2)</button><br><br>
-<label id="positionHeader">Position:</label>
-<p id="positionLabel">unknown</p>
-<label id="areaSizeHeader">Current Area Size:</label>
-<p id="areaSizeLabel">unknown</p>
-<button id="decreaseAreaSizeButton" onclick="decreaseAreaSize()">Decrease Area Size (q)</button>
-<button id="fullScreenButton" onclick="fullScreen()">Full Screen</button>
-<button id="increaseAreaSizeButton" onclick="increaseAreaSize()">Increase Area Size (w)</button><br><br>
-<label id="playerPieceSizeHeader">Current Piece Size:</label>
-<p id="PlayerPieceSizeLabel">unknown</p>
-<button id="decreasePlayerPieceSizeButton" onclick="decreasePlayerPieceSize()">Decrease Piece Size (a)</button>
-<button id="increasePlayerPieceSizeButton" onclick="increasePlayerPieceSize()">Increase Piece Size (s)</button><br><br>
-<label id="autoHeader">Auto:</label>
-<p id="autoEnableLabel">Disabled</p>
-<button id="stopAutoButton" onclick="stopAuto()">Stop Auto (Esc)</button>
-<button id="startAutoButton" onclick="startAuto()">Start Auto (\)</button><br><br>
-<label id="accelerometerHeader">Accelerometer:</label>
-<p id="accelLabel">Disabled</p>
-<p id="accelerometer">Unknown</p>
-<button id="accelButton" onclick="accelToggle()">Start/Stop Accelerometer</button> <br><br><br><br>
-<button id="startGameButton" onclick="startGame1()">Start Game</button><br><br>
-<button id="spawnEnemyButton" onclick="spawnEnemy()">Spawn Enemy</button><br><br>
-<button id="enemyFireButton" onclick="enemyFire()">Fire!</button>
-<button id="enemyFireLargeButton" onclick="enemyFireLarge()">Fire Large!</button>
-<button id="splitMinisButton" onclick="launchMoreMinis()">Split Minis!</button>
-<button hidden="hidden" id="lsButton" onclick='lockStart()'></button>
-
-</div>
-
-
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="lib/framework7/js/framework7.min.js"></script>
 <script type="text/javascript" src="js/my-app.js"></script>
-<script type="text/javascript" src="pace.min.js"></script>
+<script type="text/javascript" src="plugins/jquery-3.3.1.min.js"></script>
+
 <script type="text/javascript" src="plugins/sounds.js"></script>
 <script type="text/javascript" src="plugins/accelerometer.js"></script>
+<script type="text/javascript" src="plugins/debug.js"></script>
 <script type="text/javascript" src="plugins/screenlock.js"></script>
 
-<link href="pace.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="styles/index.css" />
 
 <script type="text/javascript" charset="utf-8">
 
@@ -128,11 +63,12 @@ else{
 //Variable Declarations
 
 speed = 1;
-growthRate = 1.25;
+growthRate = 0.05;
 growthStarted = false;
 var playerPieceGrowing;
 
 enemySpeed = 0.5;
+enemy2Speed = 0.55;
 enemyProjectileSpeed = 3.25;
 enemyFireRate = 4000;
 enemyFiring = false;
@@ -143,6 +79,8 @@ var randomX;
 var randomY;
 var enemySpeedX;
 var enemySpeedY;
+var enemy2SpeedX;
+var enemy2SpeedY;
 var aimPositionX;
 var aimPositionY;
 var firePositionX;
@@ -154,6 +92,7 @@ game1Score = 0;
 game1HighScore = 0;
 addon1 = false;
 enemyPieceActive = false;
+enemyPiece2Active = false;
 
 gamePaused = false;
 testActive = false;
@@ -161,10 +100,12 @@ testActive = false;
 var PlayerPiece;
 var PointPiece1;
 var EnemyPiece1;
+var EnemyPiece2;
 var EnemyProjectile1;
 
 var LargeMain;
 largeMainLaunched = false;
+largeTraveling = false;
 var LargeMini1;
 var LargeMini2;
 var LargeMini3;
@@ -185,6 +126,8 @@ largeMiniSize = 3;
 minisLaunched = false;
 moreMinisLaunched = false;
 
+gameAreaClearDisabled = false;
+
 gameAreaSizeFactor = 1;
 position = "(0, 0)";
 auto = false;
@@ -196,7 +139,7 @@ rcolor = "";
 
 document.getElementById("speedLabel").innerHTML = speed;
 document.getElementById("positionLabel").innerHTML = position;
-document.getElementById("PlayerPieceSizeLabel").innerHTML = "30 x 30";
+document.getElementById("playerPieceSizeLabel").innerHTML = "30 x 30";
 
 
 //Start Basic Game Functions
@@ -208,6 +151,7 @@ function startGame() {
 		PlayerPiece = new component(30, 30, "white", 305, 165, 0, 0);
 		GameArea.start();
 		increaseAreaSize();
+		document.querySelector("#div1").style.visibility = "visible";
 	
 	}
 	else {
@@ -216,12 +160,13 @@ function startGame() {
 	
 		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		GameArea.start();
+		document.body.removeChild(document.querySelector("#div1"));
 		fullScreen();
 		
 		document.querySelector("#canvas1").addEventListener('click', function() {
 			
 			if(titleScreenActive == true){	
-			
+		
 				titleScreenActive = false;
 				PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), 0, 0);
 				startGame1();
@@ -253,7 +198,11 @@ var GameArea = {
 
 		clear : function() {
 
-			this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+			if(gameAreaClearDisabled == false){
+
+				this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+			}
 
 		}
 
@@ -292,7 +241,9 @@ function component(width, height, color, x, y, speedX, speedY) {
 		this.x += this.speedX;
 		this.y += this.speedY;
 		position = "("+Math.round(PlayerPiece.x)+", "+Math.round(PlayerPiece.y)+")";
+		if(debug == true){
 		document.getElementById("positionLabel").innerHTML = position;
+		}
 		
 		//Move PlayerPiece with Accelerometer		
 
@@ -515,6 +466,7 @@ function titleScreen(){
 
 PointPiece1 = new component(0, 0, "black", 0, 0);
 EnemyPiece1 = new component(0, 0, "black", 0, 0);
+EnemyPiece2 = new component(0, 0, "black", 0, 0);
 EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 LargeMain = new component(0, 0, "black", 0, 0);
 LargeMini1 = new component(0, 0, "black", 0, 0);
@@ -535,41 +487,81 @@ LargeMini15 = new component(0, 0, "black", 0, 0);
 LargeMini16 = new component(0, 0, "black", 0, 0);
 
 
-//Move Enemy Toward Player
+//Move Enemys Toward Player/PointPiece
 
 function enemySpeedCalculation(){
 	
-	if(EnemyPiece1.x+(EnemyPiece1.width/2) < PlayerPiece.x+(PlayerPiece.width/2)){
+	//if(enemyPieceActive == true){
 
-		enemySpeedX = enemySpeed;
+		if(EnemyPiece1.x+(EnemyPiece1.width/2) < PlayerPiece.x+(PlayerPiece.width/2)){
 
-	}
-	else if(EnemyPiece1.x+(EnemyPiece1.width/2) > PlayerPiece.x+(PlayerPiece.width/2)){
+			enemySpeedX = enemySpeed;
 
-		enemySpeedX = enemySpeed*-1;
+		}
+		else if(EnemyPiece1.x+(EnemyPiece1.width/2) > PlayerPiece.x+(PlayerPiece.width/2)){
 
-	}
-	else {
+			enemySpeedX = enemySpeed*-1;
 
-		enemySpeedX = 0;
+		}
+		else {
 
-	}
+			enemySpeedX = 0;
 
-	if(EnemyPiece1.y+(EnemyPiece1.height/2) < PlayerPiece.y+(PlayerPiece.height/2)){
+		}
 
-		enemySpeedY = enemySpeed;
+		if(EnemyPiece1.y+(EnemyPiece1.height/2) < PlayerPiece.y+(PlayerPiece.height/2)){
 
-	}
-	else if(EnemyPiece1.y+(EnemyPiece1.height/2) > PlayerPiece.y+(PlayerPiece.height/2)){
+			enemySpeedY = enemySpeed;
 
-		enemySpeedY = enemySpeed*-1;
+		}
+		else if(EnemyPiece1.y+(EnemyPiece1.height/2) > PlayerPiece.y+(PlayerPiece.height/2)){
 
-	}
-	else {
+			enemySpeedY = enemySpeed*-1;
 
-		enemySpeedY = 0;
+		}
+		else {
 
-	}
+			enemySpeedY = 0;
+
+		}
+
+	//}
+	
+	//if(enemyPiece2Active == true){
+
+		if(EnemyPiece2.x+(EnemyPiece2.width/2) < PointPiece1.x+(PointPiece1.width/2)){
+
+			enemy2SpeedX = enemy2Speed;
+
+		}
+		else if(EnemyPiece2.x+(EnemyPiece2.width/2) > PointPiece1.x+(PointPiece1.width/2)){
+
+			enemy2SpeedX = enemy2Speed*-1;
+
+		}
+		else {
+
+			enemy2SpeedX = 0;
+
+		}
+
+		if(EnemyPiece2.y+(EnemyPiece2.height/2) < PointPiece1.y+(PointPiece1.height/2)){
+
+			enemy2SpeedY = enemy2Speed;
+
+		}
+		else if(EnemyPiece2.y+(EnemyPiece2.height/2) > PointPiece1.y+(PointPiece1.height/2)){
+
+			enemy2SpeedY = enemy2Speed*-1;
+
+		}
+		else {
+
+			enemy2SpeedY = 0;
+
+		}
+
+	//}
 
 }
 
@@ -613,7 +605,7 @@ function enemyAimCalculation (){
 }
 
 
-//Move Enemy
+//Move Enemys
 
 function enemyPosition(){
 
@@ -626,6 +618,13 @@ function enemyPosition(){
 
 		}
 
+		if(enemyPiece2Active == true){
+
+			EnemyPiece2.x += enemy2SpeedX;
+			EnemyPiece2.y += enemy2SpeedY;
+
+		}
+
 		if(
 		PlayerPiece.x < EnemyPiece1.x + EnemyPiece1.width &&
 		PlayerPiece.x + PlayerPiece.width > EnemyPiece1.x &&
@@ -634,6 +633,28 @@ function enemyPosition(){
 		) {
 
 			enemyTouch();	
+
+		}
+
+		if(
+		PlayerPiece.x < EnemyPiece2.x + EnemyPiece2.width &&
+		PlayerPiece.x + PlayerPiece.width > EnemyPiece2.x &&
+		PlayerPiece.y < EnemyPiece2.y + EnemyPiece2.height &&
+		PlayerPiece.y + PlayerPiece.height > EnemyPiece2.y
+		) {
+
+			enemyTouch();	
+
+		}
+
+		if(
+		PointPiece1.x < EnemyPiece2.x + EnemyPiece2.width &&
+		PointPiece1.x + PointPiece1.width > EnemyPiece2.x &&
+		PointPiece1.y < EnemyPiece2.y + EnemyPiece2.height &&
+		PointPiece1.y + PointPiece1.height > EnemyPiece2.y
+		) {
+
+			enemyScore();	
 
 		}
 
@@ -943,6 +964,7 @@ function updateGameArea() {
 	PlayerPiece.update();
 	PointPiece1.update();
 	EnemyPiece1.update();
+	EnemyPiece2.update();
 	EnemyProjectile1.update();
 	enemyPosition();
 	enemyProjectilePosition();
@@ -975,7 +997,9 @@ function updateGameArea() {
 function increaseSpeed(){
 
 	speed += 1;
-	document.getElementById("speedLabel").innerHTML = speed;
+	if(debug == true){
+		document.getElementById("speedLabel").innerHTML = speed;
+	}
 
 }
 
@@ -987,7 +1011,9 @@ function decreaseSpeed(){
 	if(speed > 0){
 
 		speed -= 1;
-		document.getElementById("speedLabel").innerHTML = speed;
+		if(debug == true){
+			document.getElementById("speedLabel").innerHTML = speed;
+		}
 
 	}
 
@@ -999,7 +1025,9 @@ function decreaseSpeed(){
 function resetSpeed (){
 
 	speed = 1;
-	document.getElementById("speedLabel").innerHTML = speed;
+	if(debug == true){
+		document.getElementById("speedLabel").innerHTML = speed;
+	}
 
 }
 
@@ -1008,12 +1036,16 @@ function resetSpeed (){
 
 function increaseAreaSize(){
 
+	document.documentElement.style.overflow = "hidden";
+
 	gameAreaSizeFactor += 0.25;
 	GameArea.canvas.width = (gameAreaSizeFactor * 20)*16;
 	GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
 	PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 	PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
-	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	if(debug == true){
+		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+	}
 
 }
 
@@ -1029,7 +1061,9 @@ function decreaseAreaSize(){
 		GameArea.canvas.height = (gameAreaSizeFactor * 20)*9;
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
-		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+		if(debug == true){
+			document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+		}
 	
 	}
 
@@ -1039,20 +1073,27 @@ function decreaseAreaSize(){
 //Fit Cavas Size to Mobile Device Screen
 
 function fullScreen (){
+	
+	GameArea.canvas.width = document.querySelector("body").scrollWidth-6;
+	GameArea.canvas.height = document.querySelector("body").scrollHeight-6;
 
-	document.documentElement.style.overflow = "hidden";
+	//GameArea.canvas.width = screen.width-6;
+	//GameArea.canvas.height = screen.height-29.5;
 
-	GameArea.canvas.width = screen.width-6;
-	GameArea.canvas.height = screen.height-29.5;
+	//GameArea.canvas.height += 25;
+	//GameArea.canvas.width += 1;
+	//GameArea.canvas.style = "width = 100%; height = 100%";
+	
+  	if(debug == true){
+		document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
+    	}
+    	//document.getElementById("canvas1").scrollIntoView();	
+	//window.scrollBy(screen.width, 0);
 
-	GameArea.canvas.height += 25;
-	GameArea.canvas.width += 1;
-	GameArea.canvas.style = "width = 100%; height = 100%";
-
-	document.getElementById("areaSizeLabel").innerHTML = GameArea.canvas.width+" x "+GameArea.canvas.height;
-	document.getElementById("canvas1").scrollIntoView();	
-	window.scrollBy(screen.width, 0);
-
+	//document.documentElement.style.overflow = "hidden";
+	//document.body.style.overflow = "hidden";
+	//document.querySelector("#canvas1").style.overflow = "hidden";
+	
 }
 
 
@@ -1062,7 +1103,9 @@ function increasePlayerPieceSize(){
 
 	PlayerPiece.width += 10;
 	PlayerPiece.height += 10;
-	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	if(debug == true){
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	}
 
 }
 
@@ -1075,7 +1118,9 @@ function decreasePlayerPieceSize(){
 
 		PlayerPiece.width -= 10;
 		PlayerPiece.height -= 10;
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		if(debug == true){
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}
 
 	}
 
@@ -1235,6 +1280,8 @@ function markBorderTouch() {
 			PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 			PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
+			EnemyPiece2 = new component(0, 0, "black", 0, 0);
+			EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 
 			if(game1Loss == false){
 				game1BGM.stop();
@@ -1244,6 +1291,13 @@ function markBorderTouch() {
 			game1Loss = true;
 			titleScreenActive = true;
 			enemyPieceActive = false;
+			enemyPiece2Active = false;
+			
+			if(game1Score >= game1HighScore){
+
+				game1HighScore = game1Score; 
+
+			}
 
 			clearInterval(playerPieceGrowing);
 			growthStarted = false;
@@ -1254,7 +1308,11 @@ function markBorderTouch() {
 			clearInterval(activelyFiringLarge);
 			enemyFiringLarge = false;
 
-			clearInterval(largeTraveling);
+			if(largeTraveling != false){
+
+				clearInterval(largeTraveling);
+		
+			}
 			LargeMain = new component(0, 0, "black", 0, 0);
 
 			stopMinis();
@@ -1275,6 +1333,7 @@ function enemyTouch(){
 		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 		EnemyPiece1 = new component(0, 0, "black", 0, 0);
+		EnemyPiece2 = new component(0, 0, "black", 0, 0);
 		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
 
 		game1BGM.stop();
@@ -1283,6 +1342,13 @@ function enemyTouch(){
 		game1Loss = true;
 		titleScreenActive = true;
 		enemyPieceActive = false;
+		enemyPiece2Active = false;
+		
+		if(game1Score >= game1HighScore){
+
+			game1HighScore = game1Score; 
+
+		}
 
 		clearInterval(playerPieceGrowing);
 		growthStarted = false;
@@ -1293,7 +1359,11 @@ function enemyTouch(){
 		clearInterval(activelyFiringLarge);
 		enemyFiringLarge = false;
 
-		clearInterval(largeTraveling);
+		if(largeTraveling != false){
+
+			clearInterval(largeTraveling);
+		
+		}
 		LargeMain = new component(0, 0, "black", 0, 0);
 
 		stopMinis();
@@ -1402,7 +1472,9 @@ function growPlayerPiece(){
 
 	PlayerPiece.width += growthRate;
 	PlayerPiece.height += growthRate;
-	document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	if(debug == true){
+		document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+	}
 
 }
 
@@ -1410,7 +1482,11 @@ function growPlayerPiece(){
 //Game1 Super Function...
 
 function startGame1(){
-	
+
+if(debug == false){
+fullScreen();	
+}
+
 	if(game1Active == false){
 	
 		speed = 0;
@@ -1437,7 +1513,7 @@ function startGame1(){
 	
 		PlayerPiece.width += 2.5;
 		PlayerPiece.height += 2.5;
-		playerPieceGrowing = setInterval(growPlayerPiece, 1000);
+		playerPieceGrowing = setInterval(growPlayerPiece, 50);
 		growthStarted = true;
 
 	}
@@ -1447,7 +1523,7 @@ function startGame1(){
 	generateRandomX();
 	generateRandomY();
 	
-	PointPiece1 = new component(10, 10, "#33d6ff", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
+	PointPiece1 = new component(10, 10, "yellow", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
 	//PointPiece1 = new component(10, 10, "#33d6ff", randomX, randomY);
 
 	if(game1Active == true){
@@ -1471,7 +1547,9 @@ function startGame1(){
 		game1Loss = false;
 		game1Score = 0;
 		PlayerPiece = new component(30, 30, "white", ((GameArea.canvas.width/2) - (PlayerPiece.width/2)), ((GameArea.canvas.height/2) - (PlayerPiece.height/2)), PlayerPiece.speedX, PlayerPiece.speedY);
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		if(debug == true){
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}
 		PlayerPiece.x = (GameArea.canvas.width/2) - (PlayerPiece.width/2);
 		PlayerPiece.y = (GameArea.canvas.height/2) - (PlayerPiece.height/2);
 		game1BGM.play();
@@ -1481,20 +1559,16 @@ function startGame1(){
 	else {
 
 		speed += 0.125;
-		document.getElementById("speedLabel").innerHTML = speed;
 		PlayerPiece.width -= 2.5;
 		PlayerPiece.height -= 2.5;
-		document.getElementById("PlayerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
-		
+		if(debug == true){
+			document.getElementById("speedLabel").innerHTML = speed;
+			document.getElementById("playerPieceSizeLabel").innerHTML = PlayerPiece.width+" x "+PlayerPiece.height;
+		}		
+
 		if(game1Score <= 98){
 
 			game1Score += 1;
-
-		}
-
-		if(game1Score >= game1HighScore){
-
-			game1HighScore = game1Score; 
 
 		}
 		
@@ -1508,9 +1582,15 @@ function startGame1(){
 
 	}
 
-	if(game1Score >= 10){
+	if(game1Score >= 5){
         	
 		spawnEnemy();
+
+	}
+
+	if(game1Score >= 10){
+        	
+		spawnEnemy2();
 
 	}
 	
@@ -1545,24 +1625,54 @@ function startGame1(){
 }
 
 
-//Spawn Enemy
+//Spawn Enemys
 
 function spawnEnemy (){
 
 	if(enemyPieceActive == false){
 
+		enemyPieceActive = true;
+
 		generateRandomX();
 		generateRandomY();
 
-		EnemyPiece1 = new component(20, 20, "orange", randomX, randomY);
+		EnemyPiece1 = new component(20, 20, "#CC6C0C", randomX, randomY);
 		enemySpawnSound.play();
 
 	}
 
-	enemyPieceActive = true;
+}
+
+function spawnEnemy2 (){
+
+	if(enemyPiece2Active == false){
+
+		enemyPiece2Active = true;
+
+		generateRandomX();
+		generateRandomY();
+
+		EnemyPiece2 = new component(17.5, 17.5, "#9400F4", randomX, randomY);
+		enemy2SpawnSound.play();
+
+	}
 
 }
 
+//Subtract Point and Move PointPiece
+
+function enemyScore (){
+
+	if(game1Score > 0){
+
+		game1Score -= 1;
+		enemyScoreSound.play();
+
+	}
+
+	PointPiece1 = new component(10, 10, "yellow", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
+
+}
 
 //Fire Enemy Projectile
 
@@ -1884,47 +1994,6 @@ document.addEventListener('keydown', function(event) {
 	}
 
 });
-
-
-//Hide All Debug Information
-
-if(debug == false) {
-
-	//document.getElementById("div1").insertBefore(document.getElementById("startGameButton"), document.getElementById("speedHeader"));
-
-	document.getElementById("div1").style.display = "none";	
-
-	/*document.getElementById("speedHeader").style.display = "none";
-	document.getElementById("speedLabel").style.display = "none";
-	document.getElementById("decreaseSpeedButton").style.display = "none";
-	document.getElementById("increaseSpeedButton").style.display = "none";
-	document.getElementById("positionHeader").style.display = "none";
-	document.getElementById("positionLabel").style.display = "none";
-	document.getElementById("areaSizeHeader").style.display = "none";
-	document.getElementById("areaSizeLabel").style.display = "none";
-	document.getElementById("decreaseAreaSizeButton").style.display = "none";
-	document.getElementById("fullScreenButton").style.display = "none";
-	document.getElementById("increaseAreaSizeButton").style.display = "none";
-	document.getElementById("playerPieceSizeHeader").style.display = "none";
-	document.getElementById("PlayerPieceSizeLabel").style.display = "none";
-	document.getElementById("decreasePlayerPieceSizeButton").style.display = "none";
-	document.getElementById("increasePlayerPieceSizeButton").style.display = "none";
-	document.getElementById("autoHeader").style.display = "none";
-	document.getElementById("autoEnableLabel").style.display = "none";
-	document.getElementById("stopAutoButton").style.display = "none";
-	document.getElementById("startAutoButton").style.display = "none";
-	document.getElementById("accelerometerHeader").style.display = "none";
-	document.getElementById("accelLabel").style.display = "none";
-	document.getElementById("accelerometer").style.display = "none";
-	document.getElementById("accelButton").style.display = "none";
-	document.getElementById("startGameButton").style.display = "none";
-	document.getElementById("spawnEnemyButton").style.display = "none";
-	document.getElementById("enemyFireButton").style.display = "none";
-	document.getElementById("enemyFireLargeButton").style.display = "none";
-	document.getElementById("splitMinisButton").style.display = "none";*/
-
-}
-
 
 </script>
 
