@@ -402,11 +402,26 @@ function gameScores(){
 	
 	if(game1Active == true){
 		
-		let scores = GameArea.context;
-		scores.font = "25px Arial";
-		scores.fillStyle = "#00e600";
-		scores.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
-		scores.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
+		let score = GameArea.context;
+		score.font = "25px Arial";
+		
+		if(game1Score <= game1HighScore){
+			
+			score.fillStyle = "#00e600";
+		
+		}
+		else{
+		
+			score.fillStyle = "#ffffa8";
+		
+		}
+		
+		score.fillText("Score: " + game1Score, GameArea.canvas.width - 110, 30);
+		
+		let highScore = GameArea.context;
+		highScore.font = "25px Arial";
+		highScore.fillStyle = "#00e600";
+		highScore.fillText("High Score: " + game1HighScore, GameArea.canvas.width - 168, 60);
 	
 	}
 
