@@ -125,6 +125,8 @@ position = "(0, 0)";
 auto = false;
 accel = false;
 rcolor = "";
+backButtonCount = 0;
+debugPassUsed = false;
 
 
 //Provide Debug Information
@@ -1138,7 +1140,7 @@ function increasePlayerPieceSize(){
 //Decrease Player Size
 function decreasePlayerPieceSize(){
 	
-	if (PlayerPiece.width != 10) {
+	if (PlayerPiece.width > 10) {
 
 		PlayerPiece.width -= 10;
 		PlayerPiece.height -= 10;
@@ -1315,7 +1317,7 @@ function markBorderTouch() {
 			enemyPieceActive = false;
 			enemyPiece2Active = false;
 			
-			if(game1Score >= game1HighScore){
+			if(game1Score >= game1HighScore && debugPassUsed == false){
 			
 				game1HighScore = game1Score; 
 				
@@ -1326,6 +1328,8 @@ function markBorderTouch() {
 				}
 			
 			}
+			
+			debugPassUsed = false;
 			
 			clearInterval(playerPieceGrowing);
 			growthStarted = false;
@@ -1368,7 +1372,7 @@ function enemyTouch(){
 		enemyPieceActive = false;
 		enemyPiece2Active = false;
 		
-		if(game1Score >= game1HighScore){
+		if(game1Score >= game1HighScore && debugPassUsed == false){
 		
 			game1HighScore = game1Score; 
 			
@@ -1379,6 +1383,8 @@ function enemyTouch(){
 			}
 			
 		}
+		
+		debugPassUsed = false;
 		
 		clearInterval(playerPieceGrowing);
 		growthStarted = false;
@@ -2026,6 +2032,65 @@ document.addEventListener('keydown', function(event) {
 	}
 	
 });
+
+
+//Back Button
+document.addEventListener("backbutton", onBackKeyDown, false);  
+function onBackKeyDown(e) { 
+	e.preventDefault();
+	
+	if(game1Active == true){
+	
+		backButtonCount += 1
+	
+	}
+	
+	if(backButtonCount >= 7){
+		
+		backButtonCount = 0;
+	
+		let debugPass = prompt("Enter Debug Password:");
+	
+		if(debugPass == "butts"){
+	
+			debugPassUsed = true;
+			
+			let clearScoreResponse = prompt("Clear High Score? (y / n)")
+			
+			if(clearScoreResponse == "y"){
+			
+				game1HighScore = 0;
+				localStorage.setItem("Game1 High Score", 0);
+			
+			}
+			else if(clearScoreResponse == "n"){
+			
+				game1HighScore = 0;
+				localStorage.setItem("Game1 High Score", 0);
+			
+			}
+			else {
+			
+				alert("INVALID RESPONSE");
+			
+			}
+			
+			let desiredScore = prompt("Enter Desired Score:");
+	
+			game1Score = 0;
+			game1Score += parseInt(desiredScore);
+			
+
+		}
+		else{
+		
+			alert("INVALID PASSWORD");
+		
+		}
+	
+	}
+		
+}
 
 </script>
 
