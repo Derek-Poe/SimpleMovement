@@ -95,6 +95,7 @@ accel = false;
 rcolor = "";
 backButtonCount = 0;
 debugPassUsed = false;
+lossDetectionEnabled = false;
 
 
 //Provide Debug Information
@@ -589,8 +590,11 @@ function enemyPosition(){
 		PlayerPiece.x + PlayerPiece.width > EnemyPiece1.x &&
 		PlayerPiece.y < EnemyPiece1.y + EnemyPiece1.height &&
 		PlayerPiece.y + PlayerPiece.height > EnemyPiece1.y
+
 		) {
-//alert("Enemy1Loss");
+if(lossDetectionEnabled == true){
+alert("Enemy1Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -601,7 +605,9 @@ function enemyPosition(){
 		PlayerPiece.y < EnemyPiece2.y + EnemyPiece2.height &&
 		PlayerPiece.y + PlayerPiece.height > EnemyPiece2.y
 		) {
-//alert("Enemy2Loss");
+if(lossDetectionEnabled == true){
+alert("Enemy2Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -689,8 +695,10 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < EnemyProjectile1.y + EnemyProjectile1.height &&
 		PlayerPiece.y + PlayerPiece.height > EnemyProjectile1.y
 		) {
-//alert("MainProjectileLoss");
-			enemyTouch();	
+if(lossDetectionEnabled == true){
+alert("MainProjectileLoss");
+}
+			enemyTouch();
 		
 		}
 		
@@ -700,9 +708,11 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMain.y + LargeMain.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMain.y
 		) {
-//alert("LargeProjectileLoss");
-			enemyTouch();	
-		
+if(lossDetectionEnabled == true){
+alert("LargeProjectileLoss");
+}
+			enemyTouch();
+
 		}
 		
 		if(
@@ -711,8 +721,10 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini1.y + LargeMini1.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini1.y
 		) {
-//alert("MiniProjectile1Loss");
-			enemyTouch();	
+if(lossDetectionEnabled == true){
+alert("MiniProjectile1Loss");
+}
+			enemyTouch();
 		
 		}
 		
@@ -722,8 +734,10 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini2.y + LargeMini2.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini2.y
 		) {
-//alert("MiniProjectile2Loss");
-			enemyTouch();	
+if(lossDetectionEnabled == true){
+alert("MiniProjectile2Loss");
+}
+			enemyTouch();
 		
 		}
 		
@@ -733,7 +747,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini3.y + LargeMini3.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini3.y
 		) {
-//alert("MiniProjectile3Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile3Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -744,7 +760,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini4.y + LargeMini4.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini4.y
 		) {
-//alert("MiniProjectile4Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile4Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -755,7 +773,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini5.y + LargeMini5.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini5.y
 		) {
-//alert("MiniProjectile5Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile5Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -766,7 +786,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini6.y + LargeMini6.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini6.y
 		) {
-//alert("MiniProjectile6Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile6Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -777,7 +799,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini7.y + LargeMini7.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini7.y
 		) {
-//alert("MiniProjectile7Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile7Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -788,7 +812,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini8.y + LargeMini8.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini8.y
 		) {
-//alert("MiniProjectile8Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile8Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -799,7 +825,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini9.y + LargeMini9.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini9.y
 		) {
-//alert("MiniProjectile9Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile9Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -810,7 +838,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini10.y + LargeMini10.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini10.y
 		) {
-//alert("MiniProjectile10Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile10Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -821,7 +851,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini11.y + LargeMini11.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini11.y
 		) {
-//alert("MiniProjectile11Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile11Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -832,7 +864,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini12.y + LargeMini12.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini12.y
 		) {
-//alert("MiniProjectile12Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile12Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -843,7 +877,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini13.y + LargeMini13.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini13.y
 		) {
-//alert("MiniProjectile13Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile13Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -854,7 +890,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini14.y + LargeMini14.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini14.y
 		) {
-//alert("MiniProjectile14Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile14Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -865,7 +903,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini15.y + LargeMini15.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini15.y
 		) {
-//alert("MiniProjectile15Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile15Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -876,7 +916,9 @@ function enemyProjectilePosition(){
 		PlayerPiece.y < LargeMini16.y + LargeMini16.height &&
 		PlayerPiece.y + PlayerPiece.height > LargeMini16.y
 		) {
-//alert("MiniProjectile16Loss");
+if(lossDetectionEnabled == true){
+alert("MiniProjectile16Loss");
+}
 			enemyTouch();	
 		
 		}
@@ -1287,7 +1329,9 @@ function markBorderTouch() {
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 			EnemyPiece2 = new component(0, 0, "black", 0, 0);
 			EnemyProjectile1 = new component(0, 0, "black", 0, 0);
-//alert("BorderTouchLoss");
+if(lossDetectionEnabled == true){
+alert("BorderTouchLoss");
+}
 			if(game1Loss == false){
 		
 				game1BGM.stop();
@@ -2036,7 +2080,7 @@ function onBackKeyDown(e) {
 	
 		if(debugPass == "butts"){
 	
-			debugPassUsed = true;
+			let debugActions = 0;
 			
 			let clearScoreResponse = prompt("Clear High Score? (y / n)")
 			
@@ -2044,12 +2088,33 @@ function onBackKeyDown(e) {
 			
 				game1HighScore = 0;
 				localStorage.setItem("Game1 High Score", 0);
+
+				debugActions += 1;
 			
 			}
-			else if(clearScoreResponse == "n"){
+			else if(clearScoreResponse == "n" || clearScoreResponse == ""){
 			
-				game1HighScore = 0;
-				localStorage.setItem("Game1 High Score", 0);
+				//nothing
+			
+			}
+			else {
+			
+				alert("INVALID RESPONSE");
+			
+			}
+
+			let enableLossDetection = prompt("Enable Loss Detection? (y / n)");
+
+			if(enableLossDetection == "y"){
+			
+				lossDetectionEnabled = true;
+
+				debugActions += 1;
+			
+			}
+			else if(enableLossDetection == "n" || lossDetectionEnabled == ""){
+			
+				//nothing
 			
 			}
 			else {
@@ -2059,9 +2124,30 @@ function onBackKeyDown(e) {
 			}
 			
 			let desiredScore = prompt("Enter Desired Score:");
-	
-			game1Score = 0;
-			game1Score += parseInt(desiredScore);
+			
+			if(parseInt(desiredScore) >= 0){
+
+				game1Score += parseInt(desiredScore);
+
+				debugActions += 1;
+
+			}
+			else if(desiredScore == "" || desiredScore == "n"){
+
+				//nothing
+
+			}
+			else{
+
+				alert("INVALID RESPONSE");				
+
+			}
+
+			if(debugActions > 0){
+
+				debugPassUsed = true;
+
+			}
 			
 
 		}
