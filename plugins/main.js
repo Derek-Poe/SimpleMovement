@@ -2040,6 +2040,20 @@ document.addEventListener('keydown', function(event) {
 	
 });
 
+document.addEventListener('keydown', function(event) {
+	
+	if (event.code == 'Backquote') {
+		
+		accel = false;
+		accelX = 0;
+		accelY = 0;
+		accelZ = 0;
+		console.log("Accelerometer Disabled");
+	
+	}
+	
+});
+
 //Auto Move
 document.addEventListener('keydown', function(event) {
 	
@@ -2066,7 +2080,7 @@ document.addEventListener("backbutton", onBackKeyDown, false);
 function onBackKeyDown(e) { 
 	e.preventDefault();
 	
-	if(game1Active == true){
+	if(game1Active == true && game1Loss == false){
 	
 		backButtonCount += 1
 	
@@ -2112,7 +2126,7 @@ function onBackKeyDown(e) {
 				debugActions += 1;
 			
 			}
-			else if(enableLossDetection == "n" || lossDetectionEnabled == ""){
+			else if(enableLossDetection == "n" || enableLossDetection == ""){
 			
 				//nothing
 			
@@ -2149,6 +2163,11 @@ function onBackKeyDown(e) {
 
 			}
 			
+
+		}
+		else if(debugPass == ""){
+
+
 
 		}
 		else{
