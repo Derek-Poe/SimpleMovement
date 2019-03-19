@@ -1870,87 +1870,31 @@ function stopMinis (){
 
 }
 
-//Listeners for All Key Events
+//Listener for All KeyDown Events
 document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'ArrowDown') {
 		
 		startDown();
 	}
-
-});
-
-document.addEventListener('keyup', function(event) {
-	
-	if (event.code == 'ArrowDown') {
-		
-		stopPieceY();
-	
-	}
-
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'ArrowUp') {
 		
 		startUp();
 	
 	}
-
-});
-
-document.addEventListener('keyup', function(event) {
-	
-	if (event.code == 'ArrowUp') {
-		
-		stopPieceY();
-	
-	}
-
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'ArrowRight') {
 		
 		startRight();
 	
 	}
-
-});
-
-document.addEventListener('keyup', function(event) {
-	
-	if (event.code == 'ArrowRight') {
-		
-		stopPieceX();
-	
-	}
-
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'ArrowLeft') {
 		
 		startLeft();
 	
 	}
-
-});
-
-document.addEventListener('keyup', function(event) {
-	
-	if (event.code == 'ArrowLeft') {
-		
-		stopPieceX();
-	
-	}
-	
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'Digit2') {
 		
@@ -1958,19 +1902,11 @@ document.addEventListener('keydown', function(event) {
 	
 	}
 	
-});
-
-document.addEventListener('keydown', function(event) {
-	
 	if (event.code == 'Digit1') {
 		
 		decreaseSpeed();
 	
 	}
-	
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'KeyW') {
 		
@@ -1978,19 +1914,11 @@ document.addEventListener('keydown', function(event) {
 	
 	}
 	
-});
-
-document.addEventListener('keydown', function(event) {
-	
 	if (event.code == 'KeyQ') {
 		
 		decreaseAreaSize();
 	
 	}
-	
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'KeyS') {
 		
@@ -1998,19 +1926,11 @@ document.addEventListener('keydown', function(event) {
 	
 	}
 	
-});
-
-document.addEventListener('keydown', function(event) {
-	
 	if (event.code == 'KeyA') {
 		
 		decreasePlayerPieceSize();
 	
 	}
-	
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'KeyP') {
 		
@@ -2018,29 +1938,17 @@ document.addEventListener('keydown', function(event) {
 	
 	}
 	
-});
-
-document.addEventListener('keydown', function(event) {
-	
 	if (event.code == 'Space') {
 		
 		startGame1();
 	
 	}
 	
-});
-
-document.addEventListener('keydown', function(event) {
-	
 	if (event.code == 'Delete') {
 		
 		spawnEnemy();
 	
 	}
-	
-});
-
-document.addEventListener('keydown', function(event) {
 	
 	if (event.code == 'Backquote') {
 		
@@ -2051,12 +1959,8 @@ document.addEventListener('keydown', function(event) {
 		console.log("Accelerometer Disabled");
 	
 	}
-	
-});
 
-//Auto Move
-document.addEventListener('keydown', function(event) {
-	
+	//Auto Move
 	if (event.code == 'Backslash' || event.code == 'Escape') {
 		
 		if(auto == false && event.code != 'Escape'){
@@ -2070,6 +1974,34 @@ document.addEventListener('keydown', function(event) {
 		
 		}
 		
+	}
+	
+});
+
+document.addEventListener('keyup', function(event) {
+	
+	if (event.code == 'ArrowDown') {
+		
+		stopPieceY();
+	
+	}
+	
+	if (event.code == 'ArrowUp') {
+		
+		stopPieceY();
+	
+	}
+
+	if (event.code == 'ArrowRight') {
+		
+		stopPieceX();
+	
+	}
+	
+	if (event.code == 'ArrowLeft') {
+		
+		stopPieceX();
+	
 	}
 	
 });
