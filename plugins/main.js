@@ -186,6 +186,7 @@ function component(width, height, color, x, y, speedX, speedY) {
 		ctx = GameArea.context;
 		ctx.fillStyle = color;
 		ctx.fillRect(this.x, this.y, this.width, this.height);
+
 	}
 	
 	//Move PlayerPiece
@@ -937,7 +938,7 @@ alert("MiniProjectile16Loss");
 
 }
 
-
+/*
 //Ensure Enemies and Projectiles are Off of the Canvas
 function clearEnemies(){
 
@@ -993,7 +994,7 @@ function clearEnemies(){
 	}
 
 }
-
+*/
 
 //Update on Canvas
 function updateGameArea() {
@@ -1028,7 +1029,7 @@ function updateGameArea() {
 	LargeMini14.update();
 	LargeMini15.update();
 	LargeMini16.update();
-	clearEnemies();
+	//clearEnemies();
 
 }
 
@@ -1317,18 +1318,217 @@ function pauseGame() {
 }
 
 
+//Remove Pieces
+
+function removePlayerPiece(){
+
+	delete PlayerPiece.width;
+	delete PlayerPiece.height;
+	delete PlayerPiece.x;
+	delete PlayerPiece.y;
+	//delete PlayerPiece.speedX;
+	//delete PlayerPiece.speedY;
+
+}
+
+function removePointPiece1(){
+
+	delete PointPiece1.width;
+	delete PointPiece1.height;
+	delete PointPiece1.x;
+	delete PointPiece1.y;
+	//delete PointPiece1.speedX;
+	//delete PointPiece1.speedY;
+
+}
+
+function removeEnemyPiece1(){
+
+	delete EnemyPiece1.width;
+	delete EnemyPiece1.height;
+	delete EnemyPiece1.x;
+	delete EnemyPiece1.y;
+	//delete EnemyPiece1.speedX;
+	//delete EnemyPiece1.speedY;
+
+}
+
+function removeEnemyPiece2(){
+
+	delete EnemyPiece2.width;
+	delete EnemyPiece2.height;
+	delete EnemyPiece2.x;
+	delete EnemyPiece2.y;
+	//delete EnemyPiece2.speedX;
+	//delete EnemyPiece2.speedY;
+
+}
+
+function removeMainProjectile(){
+	
+	delete EnemyProjectile1.width;
+	delete EnemyProjectile1.height;
+	delete EnemyProjectile1.x;
+	delete EnemyProjectile1.y;
+	//delete EnemyProjectile1.speedX;
+	//delete EnemyProjectile1.speedY;
+
+}
+
+function removeLargeMain(){
+
+	delete LargeMain.width;
+	delete LargeMain.height;
+	delete LargeMain.x;
+	delete LargeMain.y;
+	//delete LargeMain.speedX;
+	//delete LargeMain.speedY;
+
+}
+
+function removeMinis(){	
+
+	delete LargeMini1.width;
+	delete LargeMini1.height;
+	delete LargeMini1.x;
+	delete LargeMini1.y;
+	//delete LargeMini1.speedX;
+	//delete LargeMini1.speedY;
+
+	delete LargeMini2.width;
+	delete LargeMini2.height;
+	delete LargeMini2.x;
+	delete LargeMini2.y;
+	//delete LargeMini2.speedX;
+	//delete LargeMini2.speedY;
+
+	delete LargeMini3.width;
+	delete LargeMini3.height;
+	delete LargeMini3.x;
+	delete LargeMini3.y;
+	//delete LargeMini3.speedX;
+	//delete LargeMini3.speedY;
+
+	delete LargeMini4.width;
+	delete LargeMini4.height;
+	delete LargeMini4.x;
+	delete LargeMini4.y;
+	//delete LargeMini4.speedX;
+	//delete LargeMini4.speedY;
+
+	delete LargeMini5.width;
+	delete LargeMini5.height;
+	delete LargeMini5.x;
+	delete LargeMini5.y;
+	//delete LargeMini5.speedX;
+	//delete LargeMini5.speedY;
+
+	delete LargeMini6.width;
+	delete LargeMini6.height;
+	delete LargeMini6.x;
+	delete LargeMini6.y;
+	//delete LargeMini6.speedX;
+	//delete LargeMini6.speedY;
+
+	delete LargeMini7.width;
+	delete LargeMini7.height;
+	delete LargeMini7.x;
+	delete LargeMini7.y;
+	//delete LargeMini7.speedX;
+	//delete LargeMini7.speedY;
+
+	delete LargeMini8.width;
+	delete LargeMini8.height;
+	delete LargeMini8.x;
+	delete LargeMini8.y;
+	//delete LargeMini8.speedX;
+	//delete LargeMini8.speedY;
+
+	delete LargeMini9.width;
+	delete LargeMini9.height;
+	delete LargeMini9.x;
+	delete LargeMini9.y;
+	//delete LargeMini9.speedX;
+	//delete LargeMini9.speedY;
+
+	delete LargeMini10.width;
+	delete LargeMini10.height;
+	delete LargeMini10.x;
+	delete LargeMini10.y;
+	//delete LargeMini10.speedX;
+	//delete LargeMini10.speedY;
+
+	delete LargeMini11.width;
+	delete LargeMini11.height;
+	delete LargeMini11.x;
+	delete LargeMini11.y;
+	//delete LargeMini11.speedX;
+	//delete LargeMini11.speedY;
+
+	delete LargeMini12.width;
+	delete LargeMini12.height;
+	delete LargeMini12.x;
+	delete LargeMini12.y;
+	//delete LargeMini12.speedX;
+	//delete LargeMini12.speedY;
+
+	delete LargeMini13.width;
+	delete LargeMini13.height;
+	delete LargeMini13.x;
+	delete LargeMini13.y;
+	//delete LargeMini13.speedX;
+	//delete LargeMini13.speedY;
+
+	delete LargeMini14.width;
+	delete LargeMini14.height;
+	delete LargeMini14.x;
+	delete LargeMini14.y;
+	//delete LargeMini14.speedX;
+	//delete LargeMini14.speedY;
+
+	delete LargeMini15.width;
+	delete LargeMini15.height;
+	delete LargeMini15.x;
+	delete LargeMini15.y;
+	//delete LargeMini15.speedX;
+	//delete LargeMini15.speedY;
+
+	delete LargeMini16.width;
+	delete LargeMini16.height;
+	delete LargeMini16.x;
+	delete LargeMini16.y;
+	//delete LargeMini16.speedX;
+	//delete LargeMini16.speedY;
+
+}
+
+function removeAllPieces(){
+
+	removePlayerPiece();
+	removePointPiece1();
+	removeEnemyPiece1();
+	removeEnemyPiece2();
+	removeMainProjectile();
+	removeLargeMain();
+	removeMinis();
+
+}
+
 //End Game on Wall Collision
 function markBorderTouch() {
 
 	if(game1Active == true) {
 
 		if(game1Loss == false){
-				
+			
+			/*	
 			PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
 			PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
 			EnemyPiece1 = new component(0, 0, "black", 0, 0);
 			EnemyPiece2 = new component(0, 0, "black", 0, 0);
 			EnemyProjectile1 = new component(0, 0, "black", 0, 0);
+			*/
+			removeAllPieces();
 if(lossDetectionEnabled == true){
 alert("BorderTouchLoss");
 }
@@ -1372,8 +1572,8 @@ alert("BorderTouchLoss");
 		
 			}
 			
-			LargeMain = new component(0, 0, "black", 0, 0);
-			stopMinis();
+			//LargeMain = new component(0, 0, "black", 0, 0);
+			//stopMinis();
 		
 		}
 
@@ -1387,11 +1587,14 @@ function enemyTouch(){
 
 	if(game1Loss == false){
 
-		PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
-		PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
-		EnemyPiece1 = new component(0, 0, "black", 0, 0);
-		EnemyPiece2 = new component(0, 0, "black", 0, 0);
-		EnemyProjectile1 = new component(0, 0, "black", 0, 0);
+		//PlayerPiece = new component(0, 0, "black", 0, 0, 0, 0);
+		//PointPiece1 = new component(0, 0, "black", 0, 0, 0, 0);
+		//EnemyPiece1 = new component(0, 0, "black", 0, 0);
+		//EnemyPiece2 = new component(0, 0, "black", 0, 0);
+		//EnemyProjectile1 = new component(0, 0, "black", 0, 0);
+
+		removeAllPieces();
+
 		game1BGM.stop();
 		lossSound.play();
 		game1Loss = true;
@@ -1426,8 +1629,8 @@ function enemyTouch(){
 		
 		}
 	
-		LargeMain = new component(0, 0, "black", 0, 0);
-		stopMinis();
+		//LargeMain = new component(0, 0, "black", 0, 0);
+		//stopMinis();
 	
 	}
 
@@ -1452,6 +1655,7 @@ function generateRandomX (){
 		else{
 		
 			randomX = randomDecision;
+			alert("Test 2a");
 		
 		}
 	
@@ -1468,6 +1672,7 @@ function generateRandomX (){
 		else{
 		
 			randomX = randomDecision;
+			alert("Test 2a");
 		
 		}
 
@@ -1493,6 +1698,7 @@ function generateRandomY (){
 		else{
 		
 			randomY = randomDecision;
+			alert("Test 2b");
 		
 		}
 	
@@ -1509,6 +1715,7 @@ function generateRandomY (){
 		else{
 		
 			randomY = randomDecision;
+			alert("Test 2b");
 		
 		}
 	
@@ -1591,8 +1798,8 @@ function startGame1(){
 	}
 	
 	game1Active = true;
-	generateRandomX();
-	generateRandomY();
+	//generateRandomX();
+	//generateRandomY();
 	
 	PointPiece1 = new component(10, 10, "yellow", Math.floor(Math.random() * (GameArea.canvas.width - PlayerPiece.width - 5)) + 5, Math.floor(Math.random() * (GameArea.canvas.height - PlayerPiece.height - 5) + 5));
 	//PointPiece1 = new component(10, 10, "#33d6ff", randomX, randomY);
@@ -1709,8 +1916,8 @@ function spawnEnemy (){
 	if(enemyPieceActive == false){
 		
 		enemyPieceActive = true;
-		generateRandomX();
-		generateRandomY();
+		generateRandomX(); alert("Test 1a");
+		generateRandomY(); alert("Test 1b");
 		EnemyPiece1 = new component(20, 20, "#CC6C0C", randomX, randomY);
 		enemySpawnSound.play();
 	
@@ -1724,7 +1931,7 @@ function spawnEnemy2 (){
 		
 		enemyPiece2Active = true;
 		generateRandomX();
-		generateRandomY();
+		generate();
 		EnemyPiece2 = new component(17.5, 17.5, "#9400F4", randomX, randomY);
 		enemy2SpawnSound.play();
 	
@@ -1806,6 +2013,7 @@ function largeMainDetonate (){
 function launchMinis (){
 	
 	minisLaunched = true;
+	
 	LargeMini1 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	LargeMini2 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	LargeMini3 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
@@ -1815,6 +2023,7 @@ function launchMinis (){
 	LargeMini7 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	LargeMini8 = new component(largeMiniSize, largeMiniSize, "red", LargeMain.x+(LargeMain.width/2), LargeMain.y+(LargeMain.height/2));
 	
+
 	if(game1Score >= 25){
 		
 		setTimeout(launchMoreMinis, 650);
@@ -1851,6 +2060,8 @@ function stopMinis (){
 	
 	minisLaunched = false;
 	moreMinisLaunched = false;
+	
+	/*
 	LargeMini1 = new component(0, 0, "black", 0, 0);
 	LargeMini2 = new component(0, 0, "black", 0, 0);
 	LargeMini3 = new component(0, 0, "black", 0, 0);
@@ -1867,6 +2078,9 @@ function stopMinis (){
 	LargeMini14 = new component(0, 0, "black", 0, 0);
 	LargeMini15 = new component(0, 0, "black", 0, 0);
 	LargeMini16 = new component(0, 0, "black", 0, 0);
+	*/
+
+	removeMinis();
 
 }
 
