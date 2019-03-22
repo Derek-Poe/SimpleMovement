@@ -1,0 +1,35 @@
+html {
+	
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	
+}
+
+body {
+
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+
+}
+
+#canvas1 {
+
+	border:3px solid #FFA500;
+	background-color: #000000;
+	padding-left: 0;
+	padding-right: 0;
+	margin-left: 0;
+	margin-right: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	display: block;
+
+}
