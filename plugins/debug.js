@@ -1,6 +1,7 @@
 let div = document.createElement("div");
 div.id = "div1";
-div.style = "text-align: center; line-height: 0.5; width: inherit; overflow: hidden; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; visibility: hidden";
+//div.style = "text-align: center; line-height: 0.5; width: inherit; overflow: hidden; margin-left: auto; margin-right: auto; padding-left: 0; padding-right: 0; visibility: hidden";
+div.className = "debugDiv";
 document.body.appendChild(div);
 
 let break1 = document.createElement("br");
